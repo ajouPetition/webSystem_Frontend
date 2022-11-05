@@ -1,0 +1,33 @@
+.container {
+  height: 70px;
+  width: 100%;
+  font-weight: bolder;
+  font-size: 20px;
+  color: aliceblue;
+  background-color: #132d5a;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  display: flex;
+  width: 95%;
+  align-items: center;
+}
+
+.user {
+  margin-left: auto;
+}
+
+ul {
+  display: flex;
+}
+
+.link {
+  padding-left: 40px;
+}
+
+a {
+  color: aliceblue;
+  text-decoration: none;
+}
