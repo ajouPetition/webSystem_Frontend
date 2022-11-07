@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Petition = () => {
+const PetitionList = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `https://ajoupetition.herokuapp.com/api/board/list`,
+        url: `//localhost:8080/api/board/list`,
       });
       setPosts(Petitions.data);
     };
@@ -55,4 +55,4 @@ const Petition = () => {
   );
 };
 
-export default Petition;
+export default PetitionList;
