@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Home from './home/Home';
-import Petition from './home/Petition';
+import Home from './Home';
+import PetitionList from './PetitionList';
+import PetitionWrite from './PetitionWrite';
 
 const router = createBrowserRouter([
   {
@@ -10,7 +11,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/petition',
-    element: <Petition />,
+    element: <PetitionList />,
+  },
+  {
+    path: '/petition/write',
+    element: <PetitionWrite />,
   },
 ]);
 

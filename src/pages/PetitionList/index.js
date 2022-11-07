@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Petition = () => {
+const PetitionList = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -55,4 +55,4 @@ const Petition = () => {
   );
 };
 
-export default Petition;
+export default PetitionList;
