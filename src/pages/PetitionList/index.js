@@ -8,7 +8,7 @@ const PetitionList = () => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `https://ajoupetition.herokuapp.com/api/board/list`,
+        url: `//localhost:8080/api/board/list`,
       });
       setPosts(Petitions.data);
     };
