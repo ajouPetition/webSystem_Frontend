@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import style from '../../style/PetitionWrite.module.css';
+import PetitionTypeBtn from '../../components/PetitionTypeBtn';
 
 const PetitionWrite = () => {
   const [title, setTitle] = useState('');
@@ -9,13 +10,6 @@ const PetitionWrite = () => {
   const [type, setType] = useState('etc');
 
   const navigate = useNavigate();
-
-  const onSelectType = (event) => {
-    const {
-      target: { name },
-    } = event;
-    setType(name);
-  };
 
   const onTitleChange = (event) => {
     const {
@@ -62,35 +56,7 @@ const PetitionWrite = () => {
             <form onSubmit={onSubmit}>
               <div className={style.type}>
                 <span>청원분야</span>
-                <div className={style.typeButtons}>
-                  <input
-                    className={`${style.typeButton} ${
-                      type === 'etc' ? style.selectedTypeButton : ''
-                    }`}
-                    type="button"
-                    name="etc"
-                    value="기타"
-                    onClick={onSelectType}
-                  />
-                  <input
-                    className={`${style.typeButton} ${
-                      type === 'education' ? style.selectedTypeButton : ''
-                    }`}
-                    type="button"
-                    name="education"
-                    value="교육"
-                    onClick={onSelectType}
-                  />
-                  <input
-                    className={`${style.typeButton} ${
-                      type === 'facilities' ? style.selectedTypeButton : ''
-                    }`}
-                    type="button"
-                    name="facilities"
-                    value="시설"
-                    onClick={onSelectType}
-                  />
-                </div>
+                <PetitionTypeBtn type={type} setType={setType} />
               </div>
               <div className={style.title}>
                 <span>제목</span>
