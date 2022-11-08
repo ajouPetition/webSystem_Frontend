@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import style from '../../style/PetitionWrite.module.css';
 
 const PetitionWrite = () => {
   const [title, setTitle] = useState('');
@@ -49,59 +50,85 @@ const PetitionWrite = () => {
         navigate('/petition');
       });
   };
+  const onCancel = () => {
+    navigate('/');
+  };
 
   return (
     <>
-      <div>
-        <div>
-          <div>
+      <div className={style.container}>
+        <div className={style.wrapper}>
+          <div className={style.content}>
             <form onSubmit={onSubmit}>
-              <div>
+              <div className={style.type}>
                 <span>청원분야</span>
-                <input
-                  type="button"
-                  name="etc"
-                  value="기타"
-                  onClick={onSelectType}
-                />
-                <input
-                  type="button"
-                  name="education"
-                  value="교육"
-                  onClick={onSelectType}
-                />
-                <input
-                  type="button"
-                  name="facilities"
-                  value="시설"
-                  onClick={onSelectType}
-                />
+                <div className={style.typeButtons}>
+                  <input
+                    className={`${style.typeButton} ${
+                      type === 'etc' ? style.selectedTypeButton : ''
+                    }`}
+                    type="button"
+                    name="etc"
+                    value="기타"
+                    onClick={onSelectType}
+                  />
+                  <input
+                    className={`${style.typeButton} ${
+                      type === 'education' ? style.selectedTypeButton : ''
+                    }`}
+                    type="button"
+                    name="education"
+                    value="교육"
+                    onClick={onSelectType}
+                  />
+                  <input
+                    className={`${style.typeButton} ${
+                      type === 'facilities' ? style.selectedTypeButton : ''
+                    }`}
+                    type="button"
+                    name="facilities"
+                    value="시설"
+                    onClick={onSelectType}
+                  />
+                </div>
               </div>
-              <div>
-                <span>청원작성</span>
-              </div>
-              <div>
+              <div className={style.title}>
                 <span>제목</span>
-                <input
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={onTitleChange}
-                  required
-                />
+                <div>
+                  <input
+                    className={style.inputTitle}
+                    type="text"
+                    name="title"
+                    value={title}
+                    onChange={onTitleChange}
+                    required
+                  />
+                </div>
               </div>
-              <div>
+              <div className={style.content}>
                 <span>내용</span>
-                <input
-                  type="text"
-                  name="content"
-                  value={content}
-                  onChange={onContentChange}
-                  required
-                />
+                <div>
+                  <textarea
+                    className={style.inputContent}
+                    name="content"
+                    value={content}
+                    onChange={onContentChange}
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <input type="submit" value="등록" />
+              <div className={style.selectButtonBox}>
+                <input
+                  className={style.uploadButton}
+                  type="submit"
+                  value="청원등록"
+                />
+                <input
+                  className={style.cancelButton}
+                  type="button"
+                  onClick={onCancel}
+                  value="청원취소"
+                />
               </div>
             </form>
           </div>
