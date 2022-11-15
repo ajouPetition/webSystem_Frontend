@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from '../../style/Login.module.css';
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -12,10 +14,20 @@ const Login = (props) => {
   }
 
   const onPasswordHandler = (event) => {
-    setPassword(event.target.value)
+    console.log(event.target.value);
+    setPassword(event.target.value);
 }
-  
+  const onCancleHandler = (event) => {
+    navigate('/');
+  }
 
+  const onLoginhandler = () => {
+    axios
+      .post('//localhost:3000/api/users/login', {
+        email,
+        password
+      })
+  }
   return (
     <div className={style.root}>
 
@@ -27,16 +39,18 @@ const Login = (props) => {
           className={style.input}
           placeholder='이메일'
           onChange={onEmailHandler}
-          required/>
+          required
+        />
         <input 
           type="password"
           className={style.input}
           placeholder="비밀번호"
           onChange={onPasswordHandler}
-          required />
+          required 
+        />
         <div className={style.btn}>
-          <button className={style.btn1} >로그인</button>
-          <button className={style.btn1} >취소</button>
+          <button className={style.btn1} onClick={onLoginhandler}>로그인</button>
+          <button className={style.btn1} onClick={onCancleHandler}>취소</button>
         </div>
       </div>
       <p>회원가입은 <a className={style.href} href={'/login/signup'}>여기</a>에서 할 수 있습니다.</p>
