@@ -15,3 +15,60 @@
   width: 1050px;
   justify-content: center;
 }
+.categoryName {
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.petitionListWrap {
+  display: flex;
+  flex-direction: column;
+  height: 85%;
+}
+
+.petitionListDiv {
+  height: 75%;
+}
+
+.tabsUI {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 15%;
+}
+.tab {
+  color: #132d5a;
+  font-size: 15px;
+  cursor: pointer;
+  height: 50px;
+  width: calc(100% / 3);
+  background-color: #fafafa;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+  text-align: center;
+}
+.lists {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 30%;
+  height: 100px;
+  margin: 1.5%;
+  background-color: antiquewhite;
+}
+.page {
+  height: 10%;
+}

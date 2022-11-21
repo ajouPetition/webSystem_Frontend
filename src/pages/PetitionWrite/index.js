@@ -27,7 +27,7 @@ const PetitionWrite = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('//localhost:8080/api/board/upload', {
+      .post('http://ajoupetition.herokuapp.com/api/board/upload', {
         title,
         type,
         content,
