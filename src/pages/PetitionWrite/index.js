@@ -7,8 +7,7 @@ import PetitionTypeBtn from '../../components/PetitionTypeBtn';
 const PetitionWrite = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [type, setType] = useState('etc');
-
+  const [type, setType] = useState('기타');
   const navigate = useNavigate();
 
   const onTitleChange = (event) => {
@@ -27,7 +26,6 @@ const PetitionWrite = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(title, type, content);
     axios
       .post('//localhost:8080/api/board/upload', {
         title,
@@ -55,11 +53,15 @@ const PetitionWrite = () => {
           <div className={style.content}>
             <form onSubmit={onSubmit}>
               <div className={style.type}>
-                <span>청원분야</span>
-                <PetitionTypeBtn type={type} setType={setType} />
+                <label>청원분야</label>
+                <PetitionTypeBtn
+                  includeAll={false}
+                  selectedType={type}
+                  setSelectedType={setType}
+                />
               </div>
               <div className={style.title}>
-                <span>제목</span>
+                <label>제목</label>
                 <div>
                   <input
                     className={style.inputTitle}
@@ -72,7 +74,7 @@ const PetitionWrite = () => {
                 </div>
               </div>
               <div className={style.content}>
-                <span>내용</span>
+                <label>내용</label>
                 <div>
                   <textarea
                     className={style.inputContent}

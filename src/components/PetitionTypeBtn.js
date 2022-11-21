@@ -1,42 +1,30 @@
 import style from '../style/PetitionTypeBtn.module.css';
 
-const PetitionTypeBtn = ({ type, setType }) => {
+const PetitionTypeBtn = ({ includeAll, selectedType, setSelectedType }) => {
+  const types = includeAll
+    ? ['전체', '기타', '교육', '시설']
+    : ['기타', '교육', '시설'];
+
   const onSelectType = (event) => {
     const {
-      target: { name },
+      target: { value },
     } = event;
-    setType(name);
+    setSelectedType(value);
   };
 
   return (
     <div className={style.typeButtonBox}>
-      <input
-        className={`${style.typeButton} ${
-          type === 'etc' ? style.selectedTypeButton : ''
-        }`}
-        type="button"
-        name="etc"
-        value="기타"
-        onClick={onSelectType}
-      />
-      <input
-        className={`${style.typeButton} ${
-          type === 'education' ? style.selectedTypeButton : ''
-        }`}
-        type="button"
-        name="education"
-        value="교육"
-        onClick={onSelectType}
-      />
-      <input
-        className={`${style.typeButton} ${
-          type === 'facilities' ? style.selectedTypeButton : ''
-        }`}
-        type="button"
-        name="facilities"
-        value="시설"
-        onClick={onSelectType}
-      />
+      {types?.map((type) => (
+        <input
+          className={`${style.typeButton} ${
+            selectedType === type ? style.selectedTypeButton : ''
+          }`}
+          key={type}
+          type="button"
+          value={type}
+          onClick={onSelectType}
+        />
+      ))}
     </div>
   );
 };
