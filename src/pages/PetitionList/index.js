@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "../../style/PetitionList.module.css";
 
+import PetitionTypeBtn from '../../components/PetitionTypeBtn';
+
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
+  const [type, setType] = useState('전체');
 
   useEffect(() => {
     const getPetitions = async () => {
@@ -19,10 +22,13 @@ const PetitionList = () => {
   return (
     <>
       <div className={style.container}>
-        <div className={style.contentsBody}>
-          <div className={style.categoryName}>
-            <h5>청원분야</h5>
-            <span>확장</span>
+        <div className={style.wrapper}>
+          <div>
+            <PetitionTypeBtn
+              includeAll={true}
+              selectedType={type}
+              setSelectedType={setType}
+            />
           </div>
 
           <div className={style.petitionListWrap}>
