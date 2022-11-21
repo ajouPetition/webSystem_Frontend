@@ -35,7 +35,7 @@ const PetitionWrite = () => {
     event.preventDefault();
     console.log(title, type, content);
     axios
-      .post('//localhost:8080/api/board/upload', {
+      .post('http://ajoupetition.herokuapp.com/api/board/upload', {
         title,
         type,
         content,
