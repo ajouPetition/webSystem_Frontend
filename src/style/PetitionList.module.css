@@ -1,74 +1,51 @@
 .container {
-  color: #132d5a;
-  font-size: larger;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #132d5a;
+  font-size: larger;
+  width: 100%;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: 1050px;
   justify-content: center;
-}
-.categoryName {
-  height: 15%;
-  display: flex;
-  flex-direction: row;
-  background-color: #fafafa;
-  text-align: center;
+  width: 1050px;
 }
 
 .petitionListWrap {
   display: flex;
   flex-direction: column;
-  height: 85%;
 }
 
-.petitionListDiv {
-  height: 75%;
-}
-
-.tabsUI {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.tabsDiv {
   height: 15%;
+  width: 100%;
 }
-.tab {
-  color: #132d5a;
-  font-size: 15px;
-  cursor: pointer;
-  height: 50px;
-  width: calc(100% / 3);
-  background-color: #fafafa;
+
+.tabList {
+  width: 100%;
   border: 1px solid #b7b7b7;
   border-radius: 5px;
   text-align: center;
 }
+
+.petitionListDiv {
+  margin-top: 30px;
+  height: 75%;
+}
+
 .lists {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-}
-.list {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  width: 30%;
-  height: 100px;
-  margin: 1.5%;
-  background-color: antiquewhite;
 }
-.page {
+
+.pageDiv {
   height: 10%;
 }
