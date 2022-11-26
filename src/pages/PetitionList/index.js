@@ -10,9 +10,9 @@ const PetitionList = () => {
   const [type, setType] = useState("전체");
 
   const tabList = [
-    { tabName: "최다 동의 순", id: "agree"},
-    { tabName: "만료 임박 순", id: "expire"},
-    { tabName: "최근 공개 순", id: "recent"},
+    { tabName: "최다 동의 순", id: "agree" },
+    { tabName: "만료 임박 순", id: "expire" },
+    { tabName: "최근 공개 순", id: "recent" },
   ];
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const PetitionList = () => {
               <ul className={style.tabList} role="tablist">
                 {tabList &&
                   tabList.map((tab) => {
-                    return <Tab key={tab.id} item={tab}/>;
+                    return <Tab key={tab.id} item={tab} />;
                   })}
               </ul>
             </div>
@@ -51,9 +51,26 @@ const PetitionList = () => {
             <div className={style.petitionListDiv}>
               <ul className={style.lists}>
                 {posts?.map((post) => {
-                  // const date = new Date(post.date);
+                  const today = new Date();
+                  const date = new Date(post.date);
+                  const dueDate = new Date(
+                    new Date(post.date).setDate(
+                      new Date(post.date).getDate() + 30
+                    )
+                  );
+                  const dDay = Math.ceil(
+                    (dueDate.getTime() - today.getTime()) /
+                      (1000 * 60 * 60 * 24)
+                  );
                   return (
-                    <PetitionCard key={post.userId} type={post.type} title={post.title} />
+                    <PetitionCard
+                      key={post.userId}
+                      type={post.type}
+                      title={post.title}
+                      date={date.toLocaleDateString()}
+                      dueDate={dueDate.toLocaleDateString()}
+                      dDay ={dDay}
+                    />
                   );
                 })}
               </ul>
