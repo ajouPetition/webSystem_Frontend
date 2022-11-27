@@ -47,5 +47,19 @@
 }
 
 .pageDiv {
-  height: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li {
+  margin: 10px;
+}
+
+.currentPage {
+  color: red;
+}
+
+.pagination {
+  color: #132d5a;
 }
