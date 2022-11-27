@@ -1,30 +1,97 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import style from "../../style/PetitionList.module.css";
-import PetitionTypeBtn from "../../components/PetitionTypeBtn";
-import PetitionCard from "../../components/PetitionCard";
-import Tab from "../../components/Tab";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import QueryString from 'qs';
+import axios from 'axios';
+import style from '../../style/PetitionList.module.css';
+import PetitionTypeBtn from '../../components/PetitionTypeBtn';
+import PetitionCard from '../../components/PetitionCard';
+import Tab from '../../components/Tab';
 
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
-  const [type, setType] = useState("전체");
+  const [type, setType] = useState('전체');
+  const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [countPageLimit, setCountPageLimit] = useState(0);
+  const limitPost = 1;
 
   const tabList = [
-    { tabName: "최다 동의 순", id: "agree" },
-    { tabName: "만료 임박 순", id: "expire" },
-    { tabName: "최근 공개 순", id: "recent" },
+    { tabName: '최다 동의 순', id: 'agree' },
+    { tabName: '만료 임박 순', id: 'expire' },
+    { tabName: '최근 공개 순', id: 'recent' },
   ];
 
   useEffect(() => {
+    const { page } = QueryString.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
+    page && setCurrentPage(parseInt(page) - 1);
+
+    const getCountPageLimit = async () => {
+      const count = await axios({
+        method: 'GET',
+        url: `http://localhost:8080/api/board/listAll`,
+      });
+      setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
+    };
+    getCountPageLimit();
+
     const getPetitions = async () => {
       const Petitions = await axios({
-        method: "GET",
-        url: `http://ajoupetition.herokuapp.com/api/board/list`,
+        method: 'GET',
+        url: `http://localhost:8080/api/board/list?startAt=${
+          currentPage * limitPost
+        }&limit=${limitPost}`,
       });
       setPosts(Petitions.data);
     };
     getPetitions();
-  }, []);
+  }, [currentPage, location]);
+
+  const onClickSetPage = (event) => {
+    const {
+      target: { id },
+    } = event;
+    setCurrentPage(parseInt(id));
+    navigate(`/petition?page=${id}`);
+  };
+
+  const createPagination = (pageNumber) => {
+    return (
+      <li
+        onClick={onClickSetPage}
+        id={pageNumber + 1}
+        className={
+          pageNumber === currentPage ? style.currentPage : style.pagination
+        }
+        key={pageNumber + 1}
+      >
+        {pageNumber + 1}
+      </li>
+    );
+  };
+
+  const pagination = () => {
+    let temp = [];
+
+    let left = 0;
+    let right = 0;
+    temp.push(createPagination(currentPage));
+
+    for (let i = 0; i < (countPageLimit > 8 ? 8 : countPageLimit - 1); i++) {
+      temp =
+        i < 4
+          ? currentPage - left > 0
+            ? [createPagination(currentPage - ++left), ...temp]
+            : [...temp, createPagination(currentPage + ++right)]
+          : currentPage + right <= countPageLimit
+          ? [...temp, createPagination(currentPage + ++right)]
+          : [createPagination(currentPage - ++left), ...temp];
+    }
+
+    return temp;
+  };
 
   return (
     <>
@@ -69,14 +136,19 @@ const PetitionList = () => {
                       title={post.title}
                       date={date.toLocaleDateString()}
                       dueDate={dueDate.toLocaleDateString()}
-                      dDay ={dDay}
+                      dDay={dDay}
                     />
                   );
                 })}
               </ul>
             </div>
-
-            <div className={style.pageDiv}>페이지네이션</div>
+            <div className={style.pageDiv}>
+              {currentPage - 9 > 0 && <input type="button" value="이전" />}
+              <ul>{pagination()}</ul>
+              {currentPage + 9 <= countPageLimit && (
+                <input type="button" value="다음" />
+              )}
+            </div>
           </div>
         </div>
       </div>
