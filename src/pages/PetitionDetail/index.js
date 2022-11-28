@@ -6,7 +6,7 @@ import axios from "axios";
 const PetitionDetail = () => {
   const params = useParams();
   const [post, setPost] = useState({});
-  const [startDate, setStartDate] = useState("")
+  const [startDate, setStartDate] = useState("");
   const [dueDate, setDueDate] = useState("");
 
   useEffect(() => {
@@ -16,43 +16,63 @@ const PetitionDetail = () => {
         url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
+
+      const start = new Date(Petition.data[0].date);
+      const date = new Date(
+        new Date(Petition.data[0].date).setDate(
+          new Date(Petition.data[0].date).getDate() + 30
+        )
+      );
+      setStartDate(start.toLocaleDateString());
+      setDueDate(date.toLocaleDateString());
     };
     getPetition();
-
-    const getDate = () => {
-      const startDate = new Date(post.date);
-      const date = new Date(
-        new Date(post.date).setDate(new Date(post.date).getDate() + 30)
-      ).toLocaleDateString();
-      console.log(typeof(startDate));
-      setStartDate(startDate.toLocaleDateString())
-      setDueDate(date);
-    };
-
-    getDate();
   }, []);
-
-  console.log(startDate)
 
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
-        <div className={style.titleDiv}>
+        <div className={style.petitionTitle}>
           <h4>{post.title}</h4>
         </div>
 
-        <div className={style.contentDiv}>
-          <div className={style.contentHead}>
-            <div className={style.headTop}>{post.type}</div>
-            <div className={style.headBottom}>
-              <div className={style.petitionDue}>
-                {`${startDate} ~ ${dueDate}`}
+        <div className={style.petitionContent}>
+
+          <div className={style.contentHeader}>
+            <div className={style.firstLine}>
+
+              <div className={style.list}>
+                <div className={style.listTitle}>청원 분야</div>
+                <div className={style.listContent}>{post.type}</div>
               </div>
-              <div className={style.petitionAgreeCount}></div>
+
             </div>
+
+            <div className={style.secondLine}>
+
+              <div className={style.list}>
+                <div className={style.listTitle}>동의 기간</div>
+                <div className={style.listContent}>
+                  {`${startDate} ~ ${dueDate}`}
+                </div>
+              </div>
+
+              <div className={style.list}>
+                <div className={style.listTitle}>동의 수</div>
+                <div className={style.listContent}></div>
+              </div>
+            </div>
+
           </div>
 
-          <div className={style.contentBody}>{post.content}</div>
+          <div className={style.contentBody}>
+                <div className={style.contentTitle}>
+                    청원 내용</div>
+                <div className={style.contentDetail}>
+                    {post.content}
+                </div>
+          </div>
+
         </div>
       </div>
     </div>
