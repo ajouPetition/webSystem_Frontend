@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #132d5a;
+  font-size: larger;
+  width: 100%;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1050px;
+}
+
+.typeBtnList {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.tabsDiv {
+  height: 15%;
+  width: 100%;
+}
+
+.tabList {
+  width: 100%;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.petitionListDiv {
+  margin-top: 30px;
+  width: inherit;
+  height: 75%;
+}
+
+.lists {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
