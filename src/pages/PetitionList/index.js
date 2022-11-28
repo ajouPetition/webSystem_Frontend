@@ -10,6 +10,7 @@ import Tab from '../../components/Tab';
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
   const [type, setType] = useState('전체');
+  const [orderType, setOrderType] = useState('agree');
   const [countPageLimit, setCountPageLimit] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
@@ -114,14 +115,21 @@ const PetitionList = () => {
             <ul className={style.tabList} role="tablist">
               {tabList &&
                 tabList.map((tab) => {
-                  return <Tab key={tab.id} item={tab} />;
+                  return (
+                    <Tab
+                      orderType={orderType}
+                      setOrderType={setOrderType}
+                      key={tab.id}
+                      item={tab}
+                    />
+                  );
                 })}
             </ul>
           </div>
 
           <div className={style.petitionListDiv}>
             <ul className={style.lists}>
-              {posts?.map((post) => {
+              {posts?.map((post, index) => {
                 const today = new Date();
                 const date = new Date(post.date);
                 const dueDate = new Date(
@@ -134,13 +142,13 @@ const PetitionList = () => {
                 );
                 return (
                   <PetitionCard
-                    key={post.postID}
+                    key={index}
                     type={post.type}
                     title={post.title}
                     date={date.toLocaleDateString()}
                     dueDate={dueDate.toLocaleDateString()}
                     dDay={dDay}
-                    postID = {post.postID}
+                    postID={post.postID}
                   />
                 );
               })}
