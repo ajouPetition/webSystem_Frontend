@@ -140,6 +140,7 @@ const PetitionList = () => {
                 const dDay = Math.ceil(
                   (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
                 );
+                console.log(post)
                 return (
                   <PetitionCard
                     key={index}
@@ -149,6 +150,7 @@ const PetitionList = () => {
                     dueDate={dueDate.toLocaleDateString()}
                     dDay={dDay}
                     postID={post.postID}
+                    cnt = {post.cnt}
                   />
                 );
               })}
