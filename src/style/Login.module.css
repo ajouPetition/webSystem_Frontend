@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
+  height: 80vh;
 }
 
 .login {
@@ -12,14 +12,13 @@
   padding: 3rem;
   border: solid;
   box-shadow: 0.5px;
-  border-color: #cccccc
-  
+  border-color: #cccccc;
 }
 .title {
   font-size: 2rem;
   margin-bottom: 1rem;
-  font-weight:bolder;
-  color: #5A5F68
+  font-weight: bolder;
+  color: #5a5f68;
 }
 .section {
   padding-top: 1rem;
@@ -30,7 +29,6 @@
   border-right: none;
   border-bottom: none;
   border-color: #cccccc;
-
 }
 
 .input {
@@ -49,15 +47,15 @@
 .btn1 {
   width: 4rem;
   height: 1.5rem;
-  background-color: #3273B9;
+  background-color: #3273b9;
   color: white;
   border: none;
 }
 
-.btn1:hover{
+.btn1:hover {
   cursor: pointer;
 }
 
 .href {
-  color: #3273B9;
+  color: #3273b9;
 }
