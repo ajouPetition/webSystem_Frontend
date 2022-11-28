@@ -18,7 +18,7 @@ const PetitionList = () => {
     ignoreQueryPrefix: true,
   });
   const currentPage = page ? parseInt(page) - 1 : 0;
-  const limitPost = 1;
+  const limitPost = 8;
 
   const tabList = [
     { tabName: '최다 동의 순', id: 'agree' },
