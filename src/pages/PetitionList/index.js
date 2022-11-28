@@ -134,12 +134,13 @@ const PetitionList = () => {
                 );
                 return (
                   <PetitionCard
-                    key={post.userId}
+                    key={post.postID}
                     type={post.type}
                     title={post.title}
                     date={date.toLocaleDateString()}
                     dueDate={dueDate.toLocaleDateString()}
                     dDay={dDay}
+                    postID = {post.postID}
                   />
                 );
               })}
