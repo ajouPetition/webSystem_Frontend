@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import style from "../../style/PetitionDetail.module.css";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import style from '../../style/PetitionDetail.module.css';
+import axios from 'axios';
 
 const PetitionDetail = () => {
   const params = useParams();
   const [post, setPost] = useState({});
-  const [startDate, setStartDate] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [dueDate, setDueDate] = useState('');
 
   useEffect(() => {
     const getPetition = async () => {
       const Petition = await axios({
-        method: "GET",
+        method: 'GET',
         url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
@@ -27,7 +27,7 @@ const PetitionDetail = () => {
       setDueDate(date.toLocaleDateString());
     };
     getPetition();
-  }, []);
+  }, [params]);
 
   return (
     <div className={style.container}>
@@ -37,19 +37,15 @@ const PetitionDetail = () => {
         </div>
 
         <div className={style.petitionContent}>
-
           <div className={style.contentHeader}>
             <div className={style.firstLine}>
-
               <div className={style.list}>
                 <div className={style.listTitle}>청원 분야</div>
                 <div className={style.listContent}>{post.type}</div>
               </div>
-
             </div>
 
             <div className={style.secondLine}>
-
               <div className={style.list}>
                 <div className={style.listTitle}>동의 기간</div>
                 <div className={style.listContent}>
@@ -62,17 +58,12 @@ const PetitionDetail = () => {
                 <div className={style.listContent}></div>
               </div>
             </div>
-
           </div>
 
           <div className={style.contentBody}>
-                <div className={style.contentTitle}>
-                    청원 내용</div>
-                <div className={style.contentDetail}>
-                    {post.content}
-                </div>
+            <div className={style.contentTitle}>청원 내용</div>
+            <div className={style.contentDetail}>{post.content}</div>
           </div>
-
         </div>
       </div>
     </div>
