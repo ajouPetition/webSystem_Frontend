@@ -37,7 +37,7 @@
 
 .petitionListDiv {
   margin-top: 30px;
-  width: 900px;
+  width: inherit;
   height: 75%;
 }
 
@@ -61,6 +61,7 @@
 
 .pageDiv li {
   margin: 10px;
+  cursor: pointer;
 }
 
 .pageDiv input {
