@@ -1,0 +1,61 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  border: solid;
+  box-shadow: 0.5px;
+  border-color: #cccccc;
+}
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bolder;
+  color: #5a5f68;
+}
+.section {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-color: #cccccc;
+}
+
+.input {
+  width: 17rem;
+  height: 1.7rem;
+  margin: 0.5rem;
+}
+
+.btn {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btn1 {
+  width: 4rem;
+  height: 1.5rem;
+  background-color: #3273b9;
+  color: white;
+  border: none;
+}
+
+.btn1:hover {
+  cursor: pointer;
+}
+
+.href {
+  color: #3273b9;
+}
