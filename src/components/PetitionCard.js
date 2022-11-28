@@ -1,17 +1,17 @@
 import React from "react";
 import style from "../style/PetitionCard.module.css";
 
-const PetitionCard = ({ type, title, date, dueDate, dDay }) => {
+const PetitionCard = ({ type, title, date, dueDate, dDay, post }) => {
   return (
     <li className={style.cardWrap}>
       <div className={style.contentDiv}>
-        <div className={style.postType}>{type}</div>
-        <div className={style.postTitle}>{title}</div>
+        <a href={`/petition/detail/${post.postID}`}>
+          <div className={style.postType}>{type}</div>
+          <div className={style.postTitle}>{title}</div>
+        </a>
       </div>
       <div className={style.aggrementDiv}>
-        <div className={style.ratioDiv}>
-
-        </div>
+        <div className={style.ratioDiv}></div>
         <div className={style.dueDiv}>
           <div className={style.dueDateDiv}>
             <div className={style.dueDateHeader}>동의 기간</div>

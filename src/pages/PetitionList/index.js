@@ -129,9 +129,12 @@ const PetitionList = () => {
                     (dueDate.getTime() - today.getTime()) /
                       (1000 * 60 * 60 * 24)
                   );
+
+                  console.log(post)
                   return (
                     <PetitionCard
-                      key={post.userId}
+                      key={post.postId}
+                      post={post}
                       type={post.type}
                       title={post.title}
                       date={date.toLocaleDateString()}
