@@ -13,12 +13,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 1050px;
 }
 
-.petitionListWrap {
+.typeBtnList {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
 }
 
 .tabsDiv {
@@ -35,6 +37,7 @@
 
 .petitionListDiv {
   margin-top: 30px;
+  width: 900px;
   height: 75%;
 }
 
@@ -47,13 +50,37 @@
 }
 
 .pageDiv {
+  width: 450px;
+  margin-top: 20px;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 
-li {
+.pageDiv li {
   margin: 10px;
+}
+
+.pageDiv input {
+  position: absolute;
+  margin: 10px;
+  height: 30px;
+  width: 50px;
+  border-radius: 5px;
+  background-color: #132d5a;
+  border: none;
+  color: white;
+  font-weight: bolder;
+}
+
+.paginationPrevBtn {
+  left: 0;
+}
+
+.paginationNextBtn {
+  right: 0;
 }
 
 .currentPage {
