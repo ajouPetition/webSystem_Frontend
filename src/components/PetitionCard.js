@@ -1,11 +1,11 @@
 import React from "react";
 import style from "../style/PetitionCard.module.css";
 
-const PetitionCard = ({ type, title, date, dueDate, dDay, post }) => {
+const PetitionCard = ({ type, title, date, dueDate, dDay, postID }) => {
   return (
     <li className={style.cardWrap}>
       <div className={style.contentDiv}>
-        <a href={`/petition/detail/${post.postID}`}>
+        <a href={`/petition/detail/${postID}`}>
           <div className={style.postType}>{type}</div>
           <div className={style.postTitle}>{title}</div>
         </a>
