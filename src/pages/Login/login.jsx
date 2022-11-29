@@ -62,13 +62,13 @@ const Login = (props) => {
             </button>
           </div>
         </div>
-        <p>
+        <div>
           회원가입은{" "}
           <a className={style.href} href={"/login/signup"}>
             여기
           </a>
           에서 할 수 있습니다.
-        </p>
+        </div>
       </section>
     </div>
   );
