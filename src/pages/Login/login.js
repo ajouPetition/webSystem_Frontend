@@ -26,7 +26,7 @@ const Login = (props) => {
     console.log(email);
     console.log(password);
     axios
-      .post("//localhost:8080/api/users/login", {
+      .post("http://ajoupetition.herokuapp.com/api/users/login", {
         username: email,
         password: password,
       })
@@ -35,7 +35,8 @@ const Login = (props) => {
 
         // cookie 저장
         const expires = new Date();
-        expires.setFullYear(expires.getFullYear() + 10);
+        expires.setHours(expires.getHours() + 1);
+        console.log(expires);
         cookies.save("userid", email, {
           path: "/",
           expires,
