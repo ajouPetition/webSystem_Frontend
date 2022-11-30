@@ -3,10 +3,10 @@ import cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const logoutHandler = (event) => {
     cookies.remove("userid", { path: "/" });
-    // navigate("/login");
+    navigate("/login");
   };
 
   return (
@@ -35,10 +35,10 @@ const NavigationBar = () => {
                 {cookies.load("userid") === undefined ? (
                   <a href={`/login`}>로그인</a>
                 ) : (
-                  // <a href={`/login`}>로그아웃</a>
-                  <button onClick={logoutHandler}>로그아웃</button>
+                  <button className={style.button} onClick={logoutHandler}>
+                    로그아웃
+                  </button>
                 )}
-                {/* <a href={`/login`}>로그인</a> */}
               </li>
             </ul>
           </div>
