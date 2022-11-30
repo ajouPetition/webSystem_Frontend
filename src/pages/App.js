@@ -1,8 +1,8 @@
-import { RouterProvider } from 'react-router-dom';
-import NavigationBar from '../components/NavigationBar';
-import '../style/init.css';
+import { RouterProvider } from "react-router-dom";
+import NavigationBar from "../components/NavigationBar";
+import "../style/init.css";
 
-import router from './routes';
+import router from "./routes";
 
 const App = () => {
   return (

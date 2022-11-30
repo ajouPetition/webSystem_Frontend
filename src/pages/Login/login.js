@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import cookies from "react-cookies";
 import style from "../../style/Login.module.css";
 
 const Login = (props) => {
@@ -25,12 +26,23 @@ const Login = (props) => {
     console.log(email);
     console.log(password);
     axios
-      .post("//localhost:3000/api/users/auth", {
+      .post("//localhost:8080/api/users/login", {
         username: email,
         password: password,
       })
       .then((data) => {
         console.log(data);
+
+        // cookie 저장
+        const expires = new Date();
+        expires.setFullYear(expires.getFullYear() + 10);
+        cookies.save("userid", email, {
+          path: "/",
+          expires,
+        });
+        console.log(cookies.load("userid"));
+        // 로그인 성공 후 홈 화면으로
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
@@ -42,14 +54,14 @@ const Login = (props) => {
           <input
             type="text"
             className={style.input}
-            placeholder="이메일"
+            placeholder="Uesr name"
             onChange={onEmailHandler}
             required
           />
           <input
             type="password"
             className={style.input}
-            placeholder="비밀번호"
+            placeholder="Password"
             onChange={onPasswordHandler}
             required
           />

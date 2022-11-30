@@ -1,6 +1,14 @@
-import style from '../style/NavigationBar.module.css';
+import style from "../style/NavigationBar.module.css";
+import cookies from "react-cookies";
+import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
+  // const navigate = useNavigate();
+  const logoutHandler = (event) => {
+    cookies.remove("userid", { path: "/" });
+    // navigate("/login");
+  };
+
   return (
     <>
       <div className={style.container}>
@@ -24,7 +32,13 @@ const NavigationBar = () => {
           <div className={style.user}>
             <ul>
               <li className={style.link}>
-                <a href={`/login`}>로그인</a>
+                {cookies.load("userid") === undefined ? (
+                  <a href={`/login`}>로그인</a>
+                ) : (
+                  // <a href={`/login`}>로그아웃</a>
+                  <button onClick={logoutHandler}>로그아웃</button>
+                )}
+                {/* <a href={`/login`}>로그인</a> */}
               </li>
             </ul>
           </div>

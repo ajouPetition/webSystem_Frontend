@@ -1,5 +1,10 @@
+import cookies from "react-cookies";
+
 const Home = () => {
-  return <h1>hello world!</h1>;
+  const temp = () => {
+    console.log(cookies.load("userid"));
+  };
+  return <button onClick={temp}></button>;
 };
 
 export default Home;
