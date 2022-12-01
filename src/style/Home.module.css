@@ -1,0 +1,36 @@
+.container {
+    color: #132d5a;
+    font-size: larger;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 1050px;
+}
+
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.petitionListDiv {
+    margin-top: 20px;
+    height: 75%;
+}
+
+.lists {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
