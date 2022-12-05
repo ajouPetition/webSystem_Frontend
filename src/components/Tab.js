@@ -1,18 +1,20 @@
 import React from 'react';
 import style from '../style/Tab.module.css';
 
-const Tab = ({ orderType, setOrderType, item }) => {
+const Tab = ({ navigate, currentType, currentOrderBy, item }) => {
   const onClickSetOrderType = (event) => {
     const {
       target: { id },
     } = event;
-    setOrderType(id);
+    navigate(`?page=1&type=${currentType}&orderBy=${id}`);
   };
   return (
     <li
       onClick={onClickSetOrderType}
       id={item.id}
-      className={`${style.tab} ${orderType === item.id && style.selectedTab}`}
+      className={`${style.tab} ${
+        currentOrderBy === item.id && style.selectedTab
+      }`}
     >
       {item.tabName}
     </li>

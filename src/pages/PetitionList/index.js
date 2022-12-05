@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import QueryString from 'qs';
 import axios from 'axios';
 import style from '../../style/PetitionList.module.css';
@@ -10,28 +10,33 @@ import Pagination from '../../components/Pagination';
 
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
-  const [type, setType] = useState('전체');
-  const [orderType, setOrderType] = useState('agree');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentType, setCurrentType] = useState('전체');
+  const [currentOrderBy, setCurrentOrderBy] = useState('cnt');
   const [countPageLimit, setCountPageLimit] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { page } = QueryString.parse(location.search, {
-    ignoreQueryPrefix: true,
-  });
-  const currentPage = page ? parseInt(page) - 1 : 0;
-  const limitPost = 1;
+  const limitPost = 4;
 
   const tabList = [
-    { tabName: '최다 동의 순', id: 'agree' },
-    { tabName: '만료 임박 순', id: 'expire' },
-    { tabName: '최근 공개 순', id: 'recent' },
+    { tabName: '최다 동의 순', id: 'cnt' },
+    { tabName: '만료 임박 순', id: 'asc' },
+    { tabName: '최근 공개 순', id: 'desc' },
   ];
 
   useEffect(() => {
+    const { page, type, orderBy } = QueryString.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
+    page && setCurrentPage(parseInt(page) - 1);
+    type && setCurrentType(type);
+    orderBy && setCurrentOrderBy(orderBy);
+
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/list?startAt=${
+        url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
       });
@@ -42,12 +47,12 @@ const PetitionList = () => {
     const getCountPageLimit = async () => {
       const count = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/listAll`,
+        url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
       });
       setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
     };
     getCountPageLimit();
-  }, [currentPage]);
+  }, [currentPage, currentType, currentOrderBy, location.search]);
 
   return (
     <>
@@ -55,9 +60,10 @@ const PetitionList = () => {
         <div className={style.wrapper}>
           <div className={style.typeBtnList}>
             <PetitionTypeBtn
+              navigate={navigate}
               includeAll={true}
-              selectedType={type}
-              setSelectedType={setType}
+              currentType={currentType}
+              currentOrderBy={currentOrderBy}
             />
           </div>
 
@@ -67,8 +73,9 @@ const PetitionList = () => {
                 tabList.map((tab) => {
                   return (
                     <Tab
-                      orderType={orderType}
-                      setOrderType={setOrderType}
+                      navigate={navigate}
+                      currentType={currentType}
+                      currentOrderBy={currentOrderBy}
                       key={tab.id}
                       item={tab}
                     />
@@ -90,7 +97,6 @@ const PetitionList = () => {
                 const dDay = Math.ceil(
                   (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
                 );
-                console.log(post)
                 return (
                   <PetitionCard
                     key={index}
@@ -100,7 +106,7 @@ const PetitionList = () => {
                     dueDate={dueDate.toLocaleDateString()}
                     dDay={dDay}
                     postID={post.postID}
-                    cnt = {post.cnt}
+                    cnt={post.cnt}
                   />
                 );
               })}
@@ -109,6 +115,8 @@ const PetitionList = () => {
           <div>
             <Pagination
               currentPage={currentPage}
+              currentType={currentType}
+              currentOrderBy={currentOrderBy}
               countPageLimit={countPageLimit}
               goToUrl={`/petition?page=`}
             />

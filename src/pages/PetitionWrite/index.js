@@ -56,7 +56,7 @@ const PetitionWrite = () => {
                 <label>청원분야</label>
                 <PetitionTypeBtn
                   includeAll={false}
-                  selectedType={type}
+                  currentType={type}
                   setSelectedType={setType}
                 />
               </div>
