@@ -1,14 +1,24 @@
 import { useNavigate } from 'react-router-dom';
 import style from '../style/Pagination.module.css';
 
-const Pagination = ({ currentPage, countPageLimit, goToUrl }) => {
+const Pagination = ({
+  currentPage,
+  currentType,
+  currentOrderBy,
+  countPageLimit,
+  goToUrl,
+}) => {
   const navigate = useNavigate();
 
   const onClickSetPage = (event) => {
     const {
       target: { id },
     } = event;
-    navigate(goToUrl + id);
+    let url = goToUrl + id;
+    if (currentType !== undefined) {
+      url = url + `&type=${currentType}&orderBy=${currentOrderBy}`;
+    }
+    navigate(url);
   };
 
   const createPagination = (pageNumber) => {
@@ -47,11 +57,20 @@ const Pagination = ({ currentPage, countPageLimit, goToUrl }) => {
   };
 
   const onClickPrevBtn = () => {
-    navigate(goToUrl + (currentPage - 8));
+    let url = goToUrl + (currentPage - 8);
+    if (currentType !== undefined) {
+      url = url + `&type=${currentType}&orderBy=${currentOrderBy}`;
+    }
+    navigate(url);
   };
 
   const onClickNextBtn = () => {
-    navigate(goToUrl + (currentPage + 10));
+    let url = goToUrl + (currentPage + 10);
+    if (currentType !== undefined) {
+      url = url + `&type=${currentType}&orderBy=${currentOrderBy}`;
+    }
+
+    navigate(url);
   };
 
   return (

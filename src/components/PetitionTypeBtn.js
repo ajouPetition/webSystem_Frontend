@@ -1,6 +1,12 @@
 import style from '../style/PetitionTypeBtn.module.css';
 
-const PetitionTypeBtn = ({ includeAll, selectedType, setSelectedType }) => {
+const PetitionTypeBtn = ({
+  navigate,
+  includeAll,
+  setSelectedType,
+  currentType,
+  currentOrderBy,
+}) => {
   const types = includeAll
     ? ['전체', '기타', '교육', '시설']
     : ['기타', '교육', '시설'];
@@ -9,7 +15,9 @@ const PetitionTypeBtn = ({ includeAll, selectedType, setSelectedType }) => {
     const {
       target: { value },
     } = event;
-    setSelectedType(value);
+    navigate
+      ? navigate(`?page=1&type=${value}&orderBy=${currentOrderBy}`)
+      : setSelectedType(value);
   };
 
   return (
@@ -17,7 +25,7 @@ const PetitionTypeBtn = ({ includeAll, selectedType, setSelectedType }) => {
       {types?.map((type) => (
         <input
           className={`${style.typeButton} ${
-            selectedType === type ? style.selectedTypeButton : ''
+            currentType === type ? style.selectedTypeButton : ''
           }`}
           key={type}
           type="button"
