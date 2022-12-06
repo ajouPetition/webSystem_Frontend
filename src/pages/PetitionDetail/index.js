@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import style from '../../style/PetitionDetail.module.css';
-import axios from 'axios';
-import Pagination from '../../components/Pagination';
-import QueryString from 'qs';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import style from "../../style/PetitionDetail.module.css";
+import axios from "axios";
+import Pagination from "../../components/Pagination";
+import QueryString from "qs";
 
 const PetitionDetail = () => {
   const params = useParams();
   const [post, setPost] = useState({});
-  const [startDate, setStartDate] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [cntAgree, setCntAgree] = useState(0);
   const [comments, setComments] = useState([]);
-  const [commentInput, setCommentInput] = useState('');
+  const [commentInput, setCommentInput] = useState("");
   const [countComments, setCountComments] = useState(0);
 
   const [countCommentPageLimit, setCountCommentPageLimit] = useState(0);
@@ -25,13 +26,22 @@ const PetitionDetail = () => {
 
   const limitComment = 3;
 
+  const getAgreeCount = async () => {
+    const data = await axios({
+      method: "GET",
+      url: `http://localhost:8080/api/agree/post/${params.id}`,
+    });
+    setCntAgree(data.data);
+  };
+
   useEffect(() => {
     const getPetition = async () => {
       const Petition = await axios({
-        method: 'GET',
+        method: "GET",
         url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
+      console.log(Petition.data);
 
       const start = new Date(Petition.data[0].date);
       const date = new Date(
@@ -44,9 +54,11 @@ const PetitionDetail = () => {
     };
     getPetition();
 
+    getAgreeCount();
+
     const getComments = async () => {
       const data = await axios({
-        method: 'GET',
+        method: "GET",
         url: `http://localhost:8080/api/comments/view/${params.id}?startAt=${
           currentCommentPage * limitComment
         }&limit=${limitComment}`,
@@ -57,16 +69,16 @@ const PetitionDetail = () => {
 
     const getCountCommentPageLimit = async () => {
       const count = await axios({
-        method: 'GET',
+        method: "GET",
         url: `http://localhost:8080/api/comments/countComments/${params.id}`,
       });
-      setCountComments(count.data[0]['COUNT(*)']);
+      setCountComments(count.data[0]["COUNT(*)"]);
       setCountCommentPageLimit(
-        Math.ceil(count.data[0]['COUNT(*)'] / limitComment)
+        Math.ceil(count.data[0]["COUNT(*)"] / limitComment)
       );
     };
     getCountCommentPageLimit();
-  }, [currentCommentPage, params]);
+  }, [currentCommentPage, params, cntAgree]);
 
   const onChangeComment = (event) => {
     const {
@@ -78,7 +90,7 @@ const PetitionDetail = () => {
   const onSubmitComment = async (event) => {
     event.preventDefault();
     await axios({
-      method: 'POST',
+      method: "POST",
       url: `http://localhost:8080/api/comments/upload`,
       data: {
         postID: params.id,
@@ -93,7 +105,7 @@ const PetitionDetail = () => {
           : countCommentPageLimit
       }`
     );
-    setCommentInput('');
+    setCommentInput("");
   };
 
   return (
@@ -122,7 +134,9 @@ const PetitionDetail = () => {
 
               <div className={style.list}>
                 <div className={style.listTitle}>동의 수</div>
-                <div className={style.listContent}></div>
+                <div
+                  className={style.listContent}
+                >{` ${cntAgree} 명 (${cntAgree}%)`}</div>
               </div>
             </div>
           </div>
@@ -130,6 +144,36 @@ const PetitionDetail = () => {
             <div className={style.contentTitle}>청원 내용</div>
             <div className={style.contentDetail}>{post.content}</div>
           </div>
+        </div>
+
+        <div className={style.btnContainer}>
+          <button
+            onClick={() => {
+              navigate("/petition");
+            }}
+          >
+            목록보기
+          </button>
+          <button
+            onClick={() => {
+              axios
+                .post("http://localhost:8080/api/agree/agree", {
+                  postID: params.id,
+                  userID: 4,
+                })
+                .then((res) => {
+                  getAgreeCount();
+                })
+                .catch((err) => {});
+            }}
+            style={{
+              color: "white",
+              backgroundColor: "#132d5a",
+              border: "none",
+            }}
+          >
+            동의하기
+          </button>
         </div>
 
         <div className={style.commentBox}>

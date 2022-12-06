@@ -91,7 +91,7 @@ const PetitionList = () => {
                 const date = new Date(post.date);
                 const dueDate = new Date(
                   new Date(post.date).setDate(
-                    new Date(post.date).getDate() + 30
+                    new Date(post.date).getDate() + 60
                   )
                 );
                 const dDay = Math.ceil(
