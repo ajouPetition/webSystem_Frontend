@@ -39,7 +39,15 @@ ul {
   cursor: pointer;
 }
 
-a {
+.logo{
   color: aliceblue;
+}
+
+a {
+  color: rgb(131, 151, 172);
   text-decoration: none;
+}
+
+a:hover{
+  color: aliceblue;
 }

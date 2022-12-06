@@ -14,7 +14,7 @@ const NavigationBar = () => {
       <div className={style.container}>
         <div className={style.wrapper}>
           <div>
-            <span>AJOU PETITION</span>
+            <a className={style.logo} href={`/`}>AJOU PETITION</a>
           </div>
           <div>
             <ul>

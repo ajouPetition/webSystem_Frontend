@@ -164,7 +164,10 @@ const PetitionDetail = () => {
                 .then((res) => {
                   getAgreeCount();
                 })
-                .catch((err) => {});
+                .catch((err) => {
+                  if(err.response.status===400)
+                    alert('이미 동의한 청원입니다.')
+                });
             }}
             style={{
               color: "white",
