@@ -18,9 +18,9 @@ const Login = (props) => {
     console.log(event.target.value);
     setPassword(event.target.value);
   };
-  const onCancleHandler = (event) => {
-    navigate("/");
-  };
+  // const onCancleHandler = (event) => {
+  //   navigate("/");
+  // };
 
   const onLoginhandler = () => {
     console.log(email);
@@ -54,14 +54,14 @@ const Login = (props) => {
         <div className={style.section}>
           <input
             type="text"
-            className={style.input}
-            placeholder="Uesr name"
+            className={style.input1}
+            placeholder="User name"
             onChange={onEmailHandler}
             required
           />
           <input
             type="password"
-            className={style.input}
+            className={style.input2}
             placeholder="Password"
             onChange={onPasswordHandler}
             required
@@ -69,9 +69,6 @@ const Login = (props) => {
           <div className={style.btn}>
             <button className={style.btn1} onClick={onLoginhandler}>
               로그인
-            </button>
-            <button className={style.btn1} onClick={onCancleHandler}>
-              취소
             </button>
           </div>
         </div>

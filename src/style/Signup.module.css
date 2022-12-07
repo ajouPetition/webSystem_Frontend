@@ -10,31 +10,25 @@
   flex-direction: column;
   align-items: center;
   padding: 3rem;
-  border: solid;
-  box-shadow: 0.5px;
-  border-color: #cccccc;
+  border: 2px solid #cccccc;
+  border-radius: 8px;
 }
 .title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
   font-weight: bolder;
   color: #5a5f68;
 }
 .section {
-  padding-top: 1rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  border: solid;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-  border-color: #cccccc;
 }
 
 .input {
-  width: 17rem;
-  height: 1.7rem;
-  margin: 0.5rem;
+  width: 19.5rem;
+  height: 2.5rem;
+  padding-left: 10px;
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
 }
 
 .check {
@@ -50,19 +44,17 @@
 }
 
 .btn1 {
-  width: 5.5rem;
+  width: 20.5rem;
   height: 3rem;
-  padding: 0;
-  background-color: #3273b9;
+  font-size: 16.5px;
   color: white;
-  border: none;
-  font-size: 1rem;
+  background-color: #132d5a;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+}
+label {
+  padding-left: 10px;
+  font-size: 14px;
+  color: #132d5a;
 }
 
-.btn1:hover {
-  cursor: pointer;
-}
-
-.href {
-  color: #3273b9;
-}
