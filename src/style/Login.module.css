@@ -10,13 +10,11 @@
   flex-direction: column;
   align-items: center;
   padding: 3rem;
-  border: solid;
-  box-shadow: 0.5px;
-  border-color: #cccccc;
+  border: 2px solid #cccccc;
+  border-radius: 8px;
 }
 .title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
   font-weight: bolder;
   color: #5a5f68;
 }
@@ -24,17 +22,28 @@
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  border: solid;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-  border-color: #cccccc;
 }
 
-.input {
-  width: 17rem;
-  height: 1.7rem;
-  margin: 0.5rem;
+.input1 {
+  width: 19.5rem;
+  height: 2.3rem;
+  padding-left: 10px;
+  margin-top: 0.3rem;
+  border: 1.5px solid #cccccc;
+  border-bottom: none;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.input2 {
+  width: 19.5rem;
+  height: 2.3rem;
+  padding-left: 10px;
+  margin-bottom: 1rem;
+  border: 1.5px solid #cccccc;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  
 }
 
 .btn {
@@ -45,17 +54,21 @@
 }
 
 .btn1 {
-  width: 4rem;
-  height: 1.5rem;
-  background-color: #3273b9;
+  width: 20.5rem;
+  height: 3rem;
+  font-size: 16.5px;
   color: white;
-  border: none;
+  background-color: #132d5a;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
 }
 
-.btn1:hover {
-  cursor: pointer;
-}
 
 .href {
-  color: #3273b9;
+  color: #132d5a;
+  font-weight: bold;
+}
+.href:hover{
+  color: #132d5a;
+  font-weight: bold;
 }
