@@ -7,13 +7,12 @@ import PetitionTypeBtn from '../../components/PetitionTypeBtn';
 import PetitionCard from '../../components/PetitionCard';
 import Tab from '../../components/Tab';
 import Pagination from '../../components/Pagination';
+import Spinner from '../../components/Spinner';
 
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [currentType, setCurrentType] = useState('전체');
-  const [currentOrderBy, setCurrentOrderBy] = useState('cnt');
   const [countPageLimit, setCountPageLimit] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -25,13 +24,16 @@ const PetitionList = () => {
     { tabName: '최근 공개 순', id: 'desc' },
   ];
 
+  const { page, type, orderBy } = QueryString.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const currentPage = page ? parseInt(page) - 1 : 0;
+  const currentType = type ? type : '전체';
+  const currentOrderBy = orderBy ? orderBy : 'cnt';
+
   useEffect(() => {
-    const { page, type, orderBy } = QueryString.parse(location.search, {
-      ignoreQueryPrefix: true,
-    });
-    page && setCurrentPage(parseInt(page) - 1);
-    type && setCurrentType(type);
-    orderBy && setCurrentOrderBy(orderBy);
+    setIsLoading(true);
 
     const getPetitions = async () => {
       const Petitions = await axios({
@@ -40,18 +42,15 @@ const PetitionList = () => {
           currentPage * limitPost
         }&limit=${limitPost}`,
       });
-      setPosts(Petitions.data);
-    };
-    getPetitions();
-
-    const getCountPageLimit = async () => {
       const count = await axios({
         method: 'GET',
         url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
       });
       setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
+      setPosts(Petitions.data);
+      setIsLoading(false);
     };
-    getCountPageLimit();
+    getPetitions();
   }, [currentPage, currentType, currentOrderBy, location.search]);
 
   return (
@@ -83,44 +82,50 @@ const PetitionList = () => {
                 })}
             </ul>
           </div>
-
-          <div className={style.petitionListDiv}>
-            <ul className={style.lists}>
-              {posts?.map((post, index) => {
-                const today = new Date();
-                const date = new Date(post.date);
-                const dueDate = new Date(
-                  new Date(post.date).setDate(
-                    new Date(post.date).getDate() + 60
-                  )
-                );
-                const dDay = Math.ceil(
-                  (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-                );
-                return (
-                  <PetitionCard
-                    key={index}
-                    type={post.type}
-                    title={post.title}
-                    date={date.toLocaleDateString()}
-                    dueDate={dueDate.toLocaleDateString()}
-                    dDay={dDay}
-                    postID={post.postID}
-                    cnt={post.cnt}
-                  />
-                );
-              })}
-            </ul>
-          </div>
-          <div>
-            <Pagination
-              currentPage={currentPage}
-              currentType={currentType}
-              currentOrderBy={currentOrderBy}
-              countPageLimit={countPageLimit}
-              goToUrl={`/petition?page=`}
-            />
-          </div>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <div className={style.petitionListDiv}>
+                <ul className={style.lists}>
+                  {posts?.map((post, index) => {
+                    const today = new Date();
+                    const date = new Date(post.date);
+                    const dueDate = new Date(
+                      new Date(post.date).setDate(
+                        new Date(post.date).getDate() + 60
+                      )
+                    );
+                    const dDay = Math.ceil(
+                      (dueDate.getTime() - today.getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    );
+                    return (
+                      <PetitionCard
+                        key={index}
+                        type={post.type}
+                        title={post.title}
+                        date={date.toLocaleDateString()}
+                        dueDate={dueDate.toLocaleDateString()}
+                        dDay={dDay}
+                        postID={post.postID}
+                        cnt={post.cnt}
+                      />
+                    );
+                  })}
+                </ul>
+              </div>
+              <div>
+                <Pagination
+                  currentPage={currentPage}
+                  currentType={currentType}
+                  currentOrderBy={currentOrderBy}
+                  countPageLimit={countPageLimit}
+                  goToUrl={`/petition?page=`}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
