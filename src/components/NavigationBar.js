@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
-  const logoutHandler = (event) => {
-    cookies.remove("userid", { path: "/" });
-    navigate("/login");
+  const goToMypage = (event) => {
+    // cookies.remove("userid", { path: "/" });
+    navigate("/mypage");
   };
 
   return (
@@ -14,7 +14,9 @@ const NavigationBar = () => {
       <div className={style.container}>
         <div className={style.wrapper}>
           <div>
-            <a className={style.logo} href={`/`}>AJOU PETITION</a>
+            <a className={style.logo} href={`/`}>
+              AJOU PETITION
+            </a>
           </div>
           <div>
             <ul>
@@ -35,8 +37,8 @@ const NavigationBar = () => {
                 {cookies.load("userid") === undefined ? (
                   <a href={`/login`}>로그인</a>
                 ) : (
-                  <button className={style.button} onClick={logoutHandler}>
-                    로그아웃
+                  <button className={style.button} onClick={goToMypage}>
+                    내 정보
                   </button>
                 )}
               </li>

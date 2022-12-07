@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import QueryString from 'qs';
-import axios from 'axios';
-import style from '../../style/PetitionList.module.css';
-import PetitionTypeBtn from '../../components/PetitionTypeBtn';
-import PetitionCard from '../../components/PetitionCard';
-import Tab from '../../components/Tab';
-import Pagination from '../../components/Pagination';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import QueryString from "qs";
+import axios from "axios";
+import style from "../../style/PetitionList.module.css";
+import PetitionTypeBtn from "../../components/PetitionTypeBtn";
+import PetitionCard from "../../components/PetitionCard";
+import Tab from "../../components/Tab";
+import Pagination from "../../components/Pagination";
 
 const PetitionList = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentType, setCurrentType] = useState('전체');
-  const [currentOrderBy, setCurrentOrderBy] = useState('cnt');
+  const [currentType, setCurrentType] = useState("전체");
+  const [currentOrderBy, setCurrentOrderBy] = useState("cnt");
   const [countPageLimit, setCountPageLimit] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,9 +20,9 @@ const PetitionList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: '최다 동의 순', id: 'cnt' },
-    { tabName: '만료 임박 순', id: 'asc' },
-    { tabName: '최근 공개 순', id: 'desc' },
+    { tabName: "최다 동의 순", id: "cnt" },
+    { tabName: "만료 임박 순", id: "asc" },
+    { tabName: "최근 공개 순", id: "desc" },
   ];
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const PetitionList = () => {
 
     const getPetitions = async () => {
       const Petitions = await axios({
-        method: 'GET',
-        url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        method: "GET",
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
       });
@@ -46,10 +46,10 @@ const PetitionList = () => {
 
     const getCountPageLimit = async () => {
       const count = await axios({
-        method: 'GET',
-        url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
+        method: "GET",
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listAll?type=${currentType}`,
       });
-      setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
+      setCountPageLimit(Math.ceil(count.data[0]["COUNT(*)"] / limitPost));
     };
     getCountPageLimit();
   }, [currentPage, currentType, currentOrderBy, location.search]);

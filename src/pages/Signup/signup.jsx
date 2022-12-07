@@ -31,11 +31,14 @@ const Signup = (props) => {
   };
   const onSignupHandler = (event) => {
     axios
-      .post("http://ajoupetition.herokuapp.com/api/users/register", {
-        userID: email,
-        username: name,
-        password: password,
-      })
+      .post(
+        "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register",
+        {
+          userID: email,
+          username: name,
+          password: password,
+        }
+      )
       .then((response) => {
         console.log(response);
         navigate("/");

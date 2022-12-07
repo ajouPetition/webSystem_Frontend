@@ -1,0 +1,32 @@
+.section {
+  /* background-color: black; */
+}
+.optionbar {
+  display: flex;
+  font-size: 1.5em;
+  font-weight: 800;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 25%;
+  height: 91vh;
+  background-color: #132d5a;
+  color: rgb(131, 151, 172);
+}
+
+.option {
+  padding: 0.5em;
+  text-align: center;
+  width: 30%;
+  border: solid;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+.option:hover {
+  color: aliceblue;
+}
+.info {
+  width: 70%;
+}

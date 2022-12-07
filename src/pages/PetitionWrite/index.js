@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import style from '../../style/PetitionWrite.module.css';
-import PetitionTypeBtn from '../../components/PetitionTypeBtn';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import style from "../../style/PetitionWrite.module.css";
+import PetitionTypeBtn from "../../components/PetitionTypeBtn";
 
 const PetitionWrite = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [type, setType] = useState('기타');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [type, setType] = useState("기타");
   const navigate = useNavigate();
 
   const onTitleChange = (event) => {
@@ -27,23 +27,26 @@ const PetitionWrite = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('http://ajoupetition.herokuapp.com/api/board/upload', {
-        title,
-        type,
-        content,
-        userID: 1,
-      })
+      .post(
+        "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/upload",
+        {
+          title,
+          type,
+          content,
+          userID: 1,
+        }
+      )
       .then((response) => {
         console.log(response);
-        navigate('/petition');
+        navigate("/petition");
       })
       .catch((error) => {
         console.log(error);
-        navigate('/petition');
+        navigate("/petition");
       });
   };
   const onCancel = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
