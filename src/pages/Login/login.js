@@ -26,7 +26,8 @@ const Login = (props) => {
     console.log(email);
     console.log(password);
     axios
-      .post("http://ajoupetition.herokuapp.com/api/users/login", {
+      .post("http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/login", {
+      // .post("http://localhost:8080/api/users/login", {
         username: email,
         password: password,
       })

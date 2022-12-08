@@ -15,7 +15,7 @@ const Home = () => {
       const Petitions = await axios({
         method: "GET",
         url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listTop`,
-        // url: `http://127.0.0.1:3080/api/board/listTop`
+        // url: `http://localhost:8080/api/board/listTop`
       });
       setPosts(Petitions.data);
     };
@@ -37,7 +37,7 @@ const Home = () => {
               const date = new Date(post.date);
               const dueDate = new Date(                  
                 new Date(post.date).setDate(
-                  new Date(post.date).getDate() + 30
+                  new Date(post.date).getDate() + 60
                 )
               );
               const dDay = Math.ceil(

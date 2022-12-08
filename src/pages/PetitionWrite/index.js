@@ -31,7 +31,8 @@ const PetitionWrite = () => {
     event.preventDefault();
     setIsLoading(true);
     axios
-      .post('http://localhost:8080/api/board/upload', {
+      .post('http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/upload', {
+      // .post('http://localhost:8080/api/board/upload', {
         title,
         type,
         content,

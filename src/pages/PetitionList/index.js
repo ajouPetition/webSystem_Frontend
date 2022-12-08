@@ -38,13 +38,17 @@ const PetitionList = () => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
+        // url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        //   currentPage * limitPost
+        // }&limit=${limitPost}`,
       });
       const count = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listAll?type=${currentType}`,
+        // url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
       });
       setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
       setPosts(Petitions.data);
