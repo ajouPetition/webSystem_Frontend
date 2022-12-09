@@ -13,7 +13,7 @@ const Tab = ({ navigate, currentType, currentOrderBy, item }) => {
       onClick={onClickSetOrderType}
       id={item.id}
       className={`${style.tab} ${
-        currentOrderBy === item.id && style.selectedTab
+        currentOrderBy == item.id && style.selectedTab  
       }`}
     >
       {item.tabName}
