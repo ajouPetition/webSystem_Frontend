@@ -18,33 +18,31 @@ const Login = (props) => {
     console.log(event.target.value);
     setPassword(event.target.value);
   };
-  // const onCancleHandler = (event) => {
-  //   navigate("/");
-  // };
 
   const onLoginhandler = () => {
     console.log(email);
     console.log(password);
     axios
       .post("http://localhost:8080/api/users/login", {
-
         username: email,
         password: password,
       })
       .then((data) => {
-        console.log(data);
-
-        // cookie 저장
-        const expires = new Date();
-        expires.setHours(expires.getHours() + 1);
-        console.log(expires);
-        cookies.save("userid", email, {
-          path: "/",
-          expires,
-        });
-        console.log(cookies.load("userid"));
-        // 로그인 성공 후 홈 화면으로
-        navigate("/");
+        if (data.data.status === "success") {
+          alert("로그인 성공");
+          // cookie 저장
+          const expires = new Date();
+          expires.setHours(expires.getHours() + 1);
+          cookies.save("userid", email, {
+            path: "/",
+            expires,
+          });
+          console.log(cookies.load("userid"));
+          // 로그인 성공 후 홈 화면으로
+          navigate("/");
+        } else {
+          alert("로그인 실패");
+        }
       })
       .catch((err) => console.log(err));
   };
