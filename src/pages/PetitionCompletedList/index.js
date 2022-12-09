@@ -19,8 +19,8 @@ const PetitionCompletedList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: "성립된 청원", id: "cnt" },
-    { tabName: "미성립된 청원", id: "asc" },
+    { tabName: "성립된 청원", id: "pass" },
+    { tabName: "미성립된 청원", id: "0" },
   ];
 
   const { page, type, orderBy } = QueryString.parse(location.search, {
@@ -29,7 +29,7 @@ const PetitionCompletedList = () => {
 
   const currentPage = page ? parseInt(page) - 1 : 0;
   const currentType = type ? type : '전체';
-  const currentOrderBy = orderBy ? orderBy : 'cnt';
+  const currentOrderBy = orderBy ? orderBy : 'pass';
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,10 +37,10 @@ const PetitionCompletedList = () => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/exlist/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
         //   currentPage * limitPost
         // }&limit=${limitPost}`,
-        url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        url: `http://localhost:8080/api/board/exlist/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
       });
