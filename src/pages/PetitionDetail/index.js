@@ -23,7 +23,8 @@ const PetitionDetail = () => {
   const location = useLocation();
   const { commentPage } = QueryString.parse(location.search, {
     ignoreQueryPrefix: true,
-  });
+  }); 
+  const [curUserID, setCurUserID] = useState();
 
   const currentCommentPage = commentPage ? parseInt(commentPage) - 1 : 0;
 
@@ -40,6 +41,16 @@ const PetitionDetail = () => {
   useEffect(() => {
     setIsLoadingPetition(true);
     setIsLoadingComments(true);
+
+    const getUserID = async() =>{
+      const name = cookies.load("userid")
+      const data = await axios({
+        method: "GET",
+        url: `http://localhost:8080/api/users/${name}`
+      })
+      setCurUserID(data.data[0].userID)
+    }
+    getUserID();
 
     const getPetition = async () => {
       const Petition = await axios({
@@ -118,7 +129,7 @@ const PetitionDetail = () => {
       alert('잘못된 요청입니다.')
     })
   };
-  
+
   const onChangeComment = (event) => {
     const {
       target: { value },
@@ -198,7 +209,7 @@ const PetitionDetail = () => {
               >
                 목록보기
               </button>
-              {cookies.load("userid") === post.userName ? (
+              {curUserID === post.userID ? (
                 <button
                   onClick={onClickDeleteBtn}
                   style=

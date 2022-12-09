@@ -26,6 +26,7 @@
 
 .option:hover {
   color: aliceblue;
+  cursor: pointer;
 }
 .info {
   width: 80%;
