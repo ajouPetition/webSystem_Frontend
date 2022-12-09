@@ -26,19 +26,18 @@ const Signup = (props) => {
   const onPasswordCheckHandler = (event) => {
     setPasswordCheck(event.target.value);
   };
-  const onCancleHandler = (event) => {
-    navigate("/");
-  };
+  // const onCancleHandler = (event) => {
+  //   navigate("/");
+  // };
   const onSignupHandler = (event) => {
     axios
-      .post(
-        "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register",
-        {
-          userID: email,
-          username: name,
-          password: password,
-        }
-      )
+
+        .post("http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register", {
+        // .post("localhost:8080/api/users/register", {
+        userID: email,
+        username: name,
+        password: password,
+      })
       .then((response) => {
         console.log(response);
         navigate("/");
@@ -53,6 +52,7 @@ const Signup = (props) => {
       <section className={style.login}>
         <div className={style.title}>회원가입</div>
         <div className={style.section}>
+          <label>이름</label>
           <input
             type="text"
             className={style.input}
@@ -60,6 +60,7 @@ const Signup = (props) => {
             onChange={onNameHandler}
             required
           />
+          <label>이메일</label>
           <input
             type="text"
             className={style.input}
@@ -67,6 +68,7 @@ const Signup = (props) => {
             onChange={onEmailHandler}
             required
           />
+          <label>비밀번호</label>
           <input
             type="password"
             className={style.input}
@@ -76,6 +78,7 @@ const Signup = (props) => {
             onChange={onPasswordHandler}
             required
           />
+          <label>비밀번호 확인</label>
           <input
             type="password"
             className={style.input}
@@ -92,9 +95,9 @@ const Signup = (props) => {
             <button className={style.btn1} onClick={onSignupHandler}>
               회원 가입
             </button>
-            <button className={style.btn1} onClick={onCancleHandler}>
+            {/* <button className={style.btn1} onClick={onCancleHandler}>
               취소
-            </button>
+            </button> */}
           </div>
         </div>
       </section>
