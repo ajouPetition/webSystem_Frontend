@@ -6,6 +6,7 @@ import Login from "./Login/login";
 import Mypage from "./Mypage/mypage";
 import PetitionDetail from "./PetitionDetail";
 import PetitionList from "./PetitionList";
+import PetitionCompletedList from './PetitionCompletedList';
 import PetitionWrite from "./PetitionWrite";
 import Signup from "./Signup/signup";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" exact element={<Login />}></Route>
         <Route path="/login/signup" exact element={<Signup />}></Route>
         <Route path="/petition" exact element={<PetitionList />}></Route>
+        <Route path="/petitionCompleted" exact element={<PetitionCompletedList />}></Route>
         <Route path="/petition/write" exact element={<PetitionWrite />}></Route>
         <Route path="/mypage" exact element={<Mypage />}></Route>
         <Route

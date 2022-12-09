@@ -33,17 +33,16 @@ const PetitionWrite = () => {
     setIsLoading(true);
     axios
       .post("http://localhost:8080/api/board/upload", {
-
         title,
         type,
         content,
-        userID: 1,
+        userID: 4,
       })
       .then((response) => {
         console.log(response);
 
         setIsLoading(false);
-        navigate('/petition');
+        navigate("/petition");
       })
       .catch((error) => {
         console.log(error);

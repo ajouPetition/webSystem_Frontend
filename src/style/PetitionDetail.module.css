@@ -19,7 +19,7 @@
 
 .petitionTitle {
   width: 90%;
-  height: 50px;
+  padding:  0 5px 20px 5px;
   margin: 30px 0;
   text-align: center;
   border-bottom: 2px solid #132d5a;
@@ -99,7 +99,7 @@ h4 {
 
 .contentDetail {
   width: 85%;
-  padding-left: 2%;
+  padding: 0 2% 0 2%;
 }
 
 .btnContainer {
