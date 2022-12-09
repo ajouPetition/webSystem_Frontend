@@ -19,9 +19,9 @@ const PetitionList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: '최다 동의 순', id: 'cnt' },
-    { tabName: '만료 임박 순', id: 'asc' },
-    { tabName: '최근 공개 순', id: 'desc' },
+    { tabName: "최다 동의 순", id: "cnt" },
+    { tabName: "만료 임박 순", id: "asc" },
+    { tabName: "최근 공개 순", id: "desc" },
   ];
 
   const { page, type, orderBy } = QueryString.parse(location.search, {

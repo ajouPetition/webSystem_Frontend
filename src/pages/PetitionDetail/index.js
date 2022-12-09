@@ -28,6 +28,15 @@ const PetitionDetail = () => {
 
   const limitComment = 3;
 
+  const getAgreeCount = async () => {
+    const data = await axios({
+      method: "GET",
+      url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
+    });
+    setCntAgree(data.data);
+  };
+
+
   useEffect(() => {
     setIsLoadingPetition(true);
     setIsLoadingComments(true);
@@ -61,8 +70,8 @@ const PetitionDetail = () => {
 
     const getComments = async () => {
       const data = await axios({
-        method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${params.id}?startAt=${
+        method: "GET",
+        url: `http://localohost:8080/api/comments/view/${params.id}?startAt=${
           currentCommentPage * limitComment
         }&limit=${limitComment}`,
         // url: `http://localhost:8080/api/comments/view/${params.id}?startAt=${
@@ -154,6 +163,46 @@ const PetitionDetail = () => {
                 <div className={style.contentDetail}>{post.content}</div>
               </div>
             </div>
+          </div>
+          <div className={style.contentBody}>
+            <div className={style.contentTitle}>청원 내용</div>
+            <div className={style.contentDetail}>{post.content}</div>
+          </div>
+        </div>
+
+        <div className={style.btnContainer}>
+          <button
+            onClick={() => {
+              navigate("/petition");
+            }}
+          >
+            목록보기
+          </button>
+          <button
+            onClick={() => {
+              axios
+                .post("http://localhost:8080/api/agree/agree", {
+                  postID: params.id,
+                  userID: 4,
+                })
+                .then((res) => {
+                  getAgreeCount();
+                })
+                .catch((err) => {
+                  if (err.response.status === 400)
+                    alert("이미 동의한 청원입니다.");
+                });
+            }}
+            style={{
+              color: "white",
+              backgroundColor: "#132d5a",
+              border: "none",
+            }}
+          >
+            동의하기
+          </button>
+        </div>
+
 
             <div className={style.btnContainer}>
               <button

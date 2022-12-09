@@ -15,7 +15,7 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
         <div className={style.ratioDiv}>
           <div className={style.caption}>
             <div className={style.count}>
-              <img alt="like" src={likeIcon}/>
+              <img alt="like" src={likeIcon} />
               <div className={style.countText}>
                 {cnt !== null ? `${cnt}명` : "0명"}
               </div>
@@ -41,7 +41,7 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
             <div className={style.dueDateFooter}>{`${date}~${dueDate}`}</div>
           </div>
           <div className={style.dDay}>
-            <p>{`D- ${dDay}`}</p>
+            <p>{`D - ${dDay}`}</p>
           </div>
         </div>
       </div>
