@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import QueryString from 'qs';
 import axios from 'axios';
-import style from '../../style/PetitionList.module.css';
+import style from '../../style/PetitionCompletedList.module.css';
 import PetitionTypeBtn from '../../components/PetitionTypeBtn';
 import PetitionCard from '../../components/PetitionCard';
 import Tab from '../../components/Tab';
 import Pagination from '../../components/Pagination';
 import Spinner from '../../components/Spinner';
 
-const PetitionList = () => {
+const PetitionCompletedList = () => {
   const [posts, setPosts] = useState([]);
   const [countPageLimit, setCountPageLimit] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,9 +19,8 @@ const PetitionList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: "최다 동의 순", id: "cnt" },
-    { tabName: "만료 임박 순", id: "asc" },
-    { tabName: "최근 공개 순", id: "desc" },
+    { tabName: "성립된 청원", id: "cnt" },
+    { tabName: "미성립된 청원", id: "asc" },
   ];
 
   const { page, type, orderBy } = QueryString.parse(location.search, {
@@ -93,6 +92,7 @@ const PetitionList = () => {
               <div className={style.petitionListDiv}>
                 <ul className={style.lists}>
                   {posts?.map((post, index) => {
+                    
                     const today = new Date();
                     const date = new Date(post.date);
                     const dueDate = new Date(
@@ -136,4 +136,4 @@ const PetitionList = () => {
   );
 };
 
-export default PetitionList;
+export default PetitionCompletedList;

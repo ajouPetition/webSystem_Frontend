@@ -41,7 +41,7 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
             <div className={style.dueDateFooter}>{`${date}~${dueDate}`}</div>
           </div>
           <div className={style.dDay}>
-            <p>{`D - ${dDay}`}</p>
+            <p>{`D- ${dDay}`}</p>
           </div>
         </div>
       </div>

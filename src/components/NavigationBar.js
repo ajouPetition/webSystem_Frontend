@@ -29,6 +29,9 @@ const NavigationBar = () => {
               <li className={style.link}>
                 <a href={`/petition`}>청원목록</a>
               </li>
+              <li className={style.link}>
+                <a href={`/petitionCompleted`}>종료된 청원</a>
+              </li>
             </ul>
           </div>
           <div className={style.user}>

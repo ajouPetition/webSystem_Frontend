@@ -36,16 +36,15 @@ const PetitionDetail = () => {
     setCntAgree(data.data);
   };
 
-
   useEffect(() => {
     setIsLoadingPetition(true);
     setIsLoadingComments(true);
 
     const getPetition = async () => {
       const Petition = await axios({
-        method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
-        // url: `http://localhost:8080/api/board/view/${params.id}`,
+        method: "GET",
+        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
+        url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
       console.log(Petition.data);
@@ -57,9 +56,9 @@ const PetitionDetail = () => {
         )
       );
       const data = await axios({
-        method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
-        // url: `http://localhost:8080/api/agree/post/${params.id}`,
+        method: "GET",
+        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
+        url: `http://localhost:8080/api/agree/post/${params.id}`,
       });
       setStartDate(start.toLocaleDateString());
       setDueDate(date.toLocaleDateString());
@@ -71,22 +70,22 @@ const PetitionDetail = () => {
     const getComments = async () => {
       const data = await axios({
         method: "GET",
-        url: `http://localohost:8080/api/comments/view/${params.id}?startAt=${
-          currentCommentPage * limitComment
-        }&limit=${limitComment}`,
-        // url: `http://localhost:8080/api/comments/view/${params.id}?startAt=${
+        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${params.id}?startAt=${
         //   currentCommentPage * limitComment
         // }&limit=${limitComment}`,
+        url: `http://localhost:8080/api/comments/view/${params.id}?startAt=${
+          currentCommentPage * limitComment
+        }&limit=${limitComment}`,
       });
       const count = await axios({
-        method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
-        // url: `http://localhost:8080/api/comments/countComments/${params.id}`,
+        method: "GET",
+        // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
+        url: `http://localhost:8080/api/comments/countComments/${params.id}`,
       });
       setComments(data.data);
-      setCountComments(count.data[0]['COUNT(*)']);
+      setCountComments(count.data[0]["COUNT(*)"]);
       setCountCommentPageLimit(
-        Math.ceil(count.data[0]['COUNT(*)'] / limitComment)
+        Math.ceil(count.data[0]["COUNT(*)"] / limitComment)
       );
       setIsLoadingComments(false);
     };
@@ -103,9 +102,9 @@ const PetitionDetail = () => {
   const onSubmitComment = async (event) => {
     event.preventDefault();
     await axios({
-      method: 'POST',
-      url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
-      // url: `http://localhost:8080/api/comments/upload`,
+      method: "POST",
+      // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
+      url: `http://localhost:8080/api/comments/upload`,
       data: {
         postID: params.id,
         userID: 1,
@@ -119,7 +118,7 @@ const PetitionDetail = () => {
           : countCommentPageLimit
       }`
     );
-    setCommentInput('');
+    setCommentInput("");
   };
 
   return (
@@ -163,51 +162,11 @@ const PetitionDetail = () => {
                 <div className={style.contentDetail}>{post.content}</div>
               </div>
             </div>
-          </div>
-          <div className={style.contentBody}>
-            <div className={style.contentTitle}>청원 내용</div>
-            <div className={style.contentDetail}>{post.content}</div>
-          </div>
-        </div>
-
-        <div className={style.btnContainer}>
-          <button
-            onClick={() => {
-              navigate("/petition");
-            }}
-          >
-            목록보기
-          </button>
-          <button
-            onClick={() => {
-              axios
-                .post("http://localhost:8080/api/agree/agree", {
-                  postID: params.id,
-                  userID: 4,
-                })
-                .then((res) => {
-                  getAgreeCount();
-                })
-                .catch((err) => {
-                  if (err.response.status === 400)
-                    alert("이미 동의한 청원입니다.");
-                });
-            }}
-            style={{
-              color: "white",
-              backgroundColor: "#132d5a",
-              border: "none",
-            }}
-          >
-            동의하기
-          </button>
-        </div>
-
 
             <div className={style.btnContainer}>
               <button
                 onClick={() => {
-                  navigate('/petition');
+                  navigate("/petition");
                 }}
               >
                 목록보기
@@ -215,23 +174,26 @@ const PetitionDetail = () => {
               <button
                 onClick={() => {
                   axios
-                    .post('http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree', {
-                    // .post('http://localhost:8080/api/agree/agree', {
-                      postID: params.id,
-                      userID: 4,
-                    })
+                    // .post(
+                      // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
+                      // {
+                        .post('http://localhost:8080/api/agree/agree', {
+                        postID: params.id,
+                        userID: 4,
+                      }
+                    )
                     .then((res) => {
                       setCntAgree((prev) => prev + 1);
                     })
                     .catch((err) => {
                       if (err.response.status === 400)
-                        alert('이미 동의한 청원입니다.');
+                        alert("이미 동의한 청원입니다.");
                     });
                 }}
                 style={{
-                  color: 'white',
-                  backgroundColor: '#132d5a',
-                  border: 'none',
+                  color: "white",
+                  backgroundColor: "#132d5a",
+                  border: "none",
                 }}
               >
                 동의하기
@@ -239,6 +201,7 @@ const PetitionDetail = () => {
             </div>
           </>
         )}
+
         <div className={style.commentBox}>
           <div>
             <span>댓글 쓰기</span>
