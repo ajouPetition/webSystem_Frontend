@@ -38,7 +38,7 @@ const PetitionDetail = () => {
     const getPetition = async () => {
       const Petition = await axios({
         method: "GET",
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
+        url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
       console.log(Petition.data);
@@ -59,9 +59,9 @@ const PetitionDetail = () => {
     const getComments = async () => {
       const data = await axios({
         method: "GET",
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${
-          params.id
-        }?startAt=${currentCommentPage * limitComment}&limit=${limitComment}`,
+        url: `http://localohost:8080/api/comments/view/${params.id}?startAt=${
+          currentCommentPage * limitComment
+        }&limit=${limitComment}`,
       });
       setComments(data.data);
     };
@@ -70,7 +70,7 @@ const PetitionDetail = () => {
     const getCountCommentPageLimit = async () => {
       const count = await axios({
         method: "GET",
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
+        url: `http://localhost:8080/api/comments/countComments/${params.id}`,
       });
       setCountComments(count.data[0]["COUNT(*)"]);
       setCountCommentPageLimit(
@@ -91,7 +91,7 @@ const PetitionDetail = () => {
     event.preventDefault();
     await axios({
       method: "POST",
-      url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
+      url: `http://localhost:8080/api/comments/upload`,
       data: {
         postID: params.id,
         userID: 1,

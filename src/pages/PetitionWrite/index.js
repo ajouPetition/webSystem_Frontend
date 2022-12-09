@@ -27,15 +27,12 @@ const PetitionWrite = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(
-        "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/upload",
-        {
-          title,
-          type,
-          content,
-          userID: 1,
-        }
-      )
+      .post("http://localhost:8080/api/board/upload", {
+        title,
+        type,
+        content,
+        userID: 1,
+      })
       .then((response) => {
         console.log(response);
         navigate("/petition");

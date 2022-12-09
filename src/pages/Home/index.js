@@ -5,8 +5,6 @@ import cookies from "react-cookies";
 import style from "../../style/Home.module.css";
 import PetitionCard from "../../components/PetitionCard";
 
-
-
 const Home = () => {
   const [posts, setPosts] = useState([]);
   console.log(cookies.load("userid"));
@@ -14,15 +12,14 @@ const Home = () => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: "GET",
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listTop`,
+        url: `http://localhost:8080/api/board/listTop`,
         // url: `http://127.0.0.1:3080/api/board/listTop`
       });
       setPosts(Petitions.data);
     };
     getPetitions();
-    console.log(posts)
+    console.log(posts);
   }, []);
-
 
   return (
     <div className={style.container}>
@@ -35,10 +32,8 @@ const Home = () => {
             {posts?.map((post) => {
               const today = new Date();
               const date = new Date(post.date);
-              const dueDate = new Date(                  
-                new Date(post.date).setDate(
-                  new Date(post.date).getDate() + 30
-                )
+              const dueDate = new Date(
+                new Date(post.date).setDate(new Date(post.date).getDate() + 30)
               );
               const dDay = Math.ceil(
                 (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
@@ -52,7 +47,7 @@ const Home = () => {
                   dueDate={dueDate.toLocaleDateString()}
                   dDay={dDay}
                   postID={post.postID}
-                  cnt = {post.cnt}
+                  cnt={post.cnt}
                 />
               );
             })}
@@ -60,7 +55,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Home;
