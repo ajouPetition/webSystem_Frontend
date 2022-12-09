@@ -10,7 +10,7 @@ const Spinner = () => {
         transform: 'translate(-50%, -50%',
       }}
     >
-      <ClipLoader color={'red'} loading={true} size={300} />;
+      <ClipLoader color={'#132d5a'} loading={true} size={50} />
     </div>
   );
 };

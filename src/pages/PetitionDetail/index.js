@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import style from '../../style/PetitionDetail.module.css';
-import axios from 'axios';
-import Pagination from '../../components/Pagination';
-import QueryString from 'qs';
-import Spinner from '../../components/Spinner';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import style from "../../style/PetitionDetail.module.css";
+import axios from "axios";
+import Pagination from "../../components/Pagination";
+import QueryString from "qs";
+import Spinner from "../../components/Spinner";
+import cookies from "react-cookies";
 
 const PetitionDetail = () => {
   const params = useParams();
   const [post, setPost] = useState({});
-  const [startDate, setStartDate] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [cntAgree, setCntAgree] = useState(0);
   const [comments, setComments] = useState([]);
-  const [commentInput, setCommentInput] = useState('');
+  const [commentInput, setCommentInput] = useState("");
   const [countComments, setCountComments] = useState(0);
   const [isLoadingPetition, setIsLoadingPetition] = useState(true);
   const [isLoadingComments, setIsLoadingComments] = useState(true);
@@ -30,7 +31,7 @@ const PetitionDetail = () => {
 
   const getAgreeCount = async () => {
     const data = await axios({
-      method: 'GET',
+      method: "GET",
       url: `http://localhost:8080/api/agree/post/${params.id}`,
     });
     setCntAgree(data.data);
@@ -47,7 +48,6 @@ const PetitionDetail = () => {
         url: `http://localhost:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
-      console.log(Petition.data);
 
       const start = new Date(Petition.data[0].date);
       const date = new Date(
@@ -92,6 +92,33 @@ const PetitionDetail = () => {
     getComments();
   }, [currentCommentPage, params, cntAgree]);
 
+  const onClickAgreeBtn = (event) => {
+    axios
+      // .post(
+      // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
+      // {
+      .post("http://localhost:8080/api/agree/agree", {
+        postID: params.id,
+        userID: 4,
+      })
+      .then((res) => {
+        getAgreeCount();
+      })
+      .catch((err) => {
+        if (err.response.status === 400) alert("이미 동의한 청원입니다.");
+      });
+  };
+
+  const onClickDeleteBtn = (event) => {
+    axios.delete(`http://localhost:8080/api/board/delete/${params.id}`)
+    .then((res)=>{
+      navigate('/petition')
+    })
+    .catch((err)=>{
+      alert('잘못된 요청입니다.')
+    })
+  };
+  
   const onChangeComment = (event) => {
     const {
       target: { value },
@@ -155,11 +182,11 @@ const PetitionDetail = () => {
                       className={style.listContent}
                     >{` ${cntAgree} 명 (${cntAgree}%)`}</div>
                   </div>
-                  <div className={style.contentBody}>
-                    <div className={style.contentTitle}>청원 내용</div>
-                    <div className={style.contentDetail}>{post.content}</div>
-                  </div>
                 </div>
+              </div>
+              <div className={style.contentBody}>
+                <div className={style.contentTitle}>청원 내용</div>
+                <div className={style.contentDetail}>{post.content}</div>
               </div>
             </div>
 
@@ -171,33 +198,29 @@ const PetitionDetail = () => {
               >
                 목록보기
               </button>
-              <button
-                onClick={() => {
-                  axios
-                    // .post(
-                      // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
-                      // {
-                        .post('http://localhost:8080/api/agree/agree', {
-                        postID: params.id,
-                        userID: 4,
-                      }
-                    )
-                    .then((res) => {
-                      getAgreeCount();
-                    })
-                    .catch((err) => {
-                      if (err.response.status === 400)
-                        alert("이미 동의한 청원입니다.");
-                    });
-                }}
-                style={{
-                  color: "white",
-                  backgroundColor: "#132d5a",
-                  border: "none",
-                }}
-              >
-                동의하기
-              </button>
+              {cookies.load("userid") === post.userName ? (
+                <button
+                  onClick={onClickDeleteBtn}
+                  style=
+                  {{
+                    color: "white",
+                    backgroundColor: "#132d5a",
+                    border: "none",
+                  }}>
+                    삭제하기
+                </button>
+              ) : (
+                <button
+                  onClick={onClickAgreeBtn}
+                  style={{
+                    color: "white",
+                    backgroundColor: "#132d5a",
+                    border: "none",
+                  }}
+                >
+                  동의하기
+                </button>
+              )}
             </div>
           </>
         )}

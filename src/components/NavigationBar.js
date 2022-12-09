@@ -3,11 +3,6 @@ import cookies from "react-cookies";
 import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
-  const navigate = useNavigate();
-  const goToMypage = (event) => {
-    // cookies.remove("userid", { path: "/" });
-    navigate("/mypage");
-  };
 
   return (
     <>
@@ -40,9 +35,7 @@ const NavigationBar = () => {
                 {cookies.load("userid") === undefined ? (
                   <a href={`/login`}>로그인</a>
                 ) : (
-                  <button className={style.button} onClick={goToMypage}>
-                    내 정보
-                  </button>
+                  <a style={{color:"white"}} href={`/mypage`}>내 정보</a>
                 )}
               </li>
             </ul>
