@@ -19,9 +19,9 @@ const PetitionList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: "최다 동의 순", id: "cnt" },
-    { tabName: "만료 임박 순", id: "asc" },
-    { tabName: "최근 공개 순", id: "desc" },
+    { tabName: '최다 동의 순', id: 'cnt' },
+    { tabName: '만료 임박 순', id: 'asc' },
+    { tabName: '최근 공개 순', id: 'desc' },
   ];
 
   const { page, type, orderBy } = QueryString.parse(location.search, {
@@ -38,7 +38,7 @@ const PetitionList = () => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
+        url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
         // url: `http://localhost:8080/api/board/list/filter?type=${currentType}&orderBy=${currentOrderBy}&startAt=${
@@ -47,7 +47,7 @@ const PetitionList = () => {
       });
       const count = await axios({
         method: 'GET',
-        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listAll?type=${currentType}`,
+        url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
         // url: `http://localhost:8080/api/board/listAll?type=${currentType}`,
       });
       setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
