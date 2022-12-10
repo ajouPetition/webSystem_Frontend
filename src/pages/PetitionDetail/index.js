@@ -42,6 +42,7 @@ const PetitionDetail = ({ user }) => {
     setIsLoadingComments(true);
 
     const getUserID = async () => {
+      if(!user) return
       const data = await axios({
         method: 'GET',
         url: `http://localhost:8080/api/users/${user}`,
@@ -102,6 +103,10 @@ const PetitionDetail = ({ user }) => {
   }, [currentCommentPage, params, cntAgree, user]);
 
   const onClickAgreeBtn = (event) => {
+    if(!user){
+      alert("로그인이 필요합니다.");
+      return navigate('/login')
+    }
     if (window.confirm('동의 하시겠습니까?')) {
       axios
         // .post(
