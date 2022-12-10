@@ -6,28 +6,23 @@ import style from '../../style/Login.module.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const onEmailHandler = (event) => {
+  const onUsernameHandler = (event) => {
     console.log(event.target.value);
-    setEmail(event.target.value);
+    setUsername(event.target.value);
   };
 
   const onPasswordHandler = (event) => {
     console.log(event.target.value);
     setPassword(event.target.value);
   };
-  // const onCancleHandler = (event) => {
-  //   navigate("/");
-  // };
 
   const onLoginhandler = () => {
-    console.log(email);
-    console.log(password);
     axios
       .post('http://localhost:8080/api/users/login', {
-        username: email,
+        username: username,
         password: password,
       })
       .then((data) => {
@@ -50,7 +45,7 @@ const Login = () => {
             type="text"
             className={style.input1}
             placeholder="User name"
-            onChange={onEmailHandler}
+            onChange={onUsernameHandler}
             required
           />
           <input
