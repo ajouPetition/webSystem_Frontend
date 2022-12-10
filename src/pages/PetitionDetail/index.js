@@ -5,9 +5,8 @@ import axios from "axios";
 import Pagination from "../../components/Pagination";
 import QueryString from "qs";
 import Spinner from "../../components/Spinner";
-import cookies from "react-cookies";
 
-const PetitionDetail = () => {
+const PetitionDetail = ({user}) => {
   const params = useParams();
   const [post, setPost] = useState({});
   const [startDate, setStartDate] = useState("");
@@ -43,10 +42,9 @@ const PetitionDetail = () => {
     setIsLoadingComments(true);
 
     const getUserID = async() =>{
-      const name = cookies.load("userid")
       const data = await axios({
         method: "GET",
-        url: `http://localhost:8080/api/users/${name}`
+        url: `http://localhost:8080/api/users/${user}`
       })
       setCurUserID(data.data[0].userID)
     }
@@ -101,7 +99,7 @@ const PetitionDetail = () => {
       setIsLoadingComments(false);
     };
     getComments();
-  }, [currentCommentPage, params, cntAgree]);
+  }, [currentCommentPage, params, cntAgree, user]);
 
   const onClickAgreeBtn = (event) => {
     if(window.confirm("동의 하시겠습니까?")){
@@ -111,7 +109,7 @@ const PetitionDetail = () => {
         // {
         .post("http://localhost:8080/api/agree/agree", {
           postID: params.id,
-          userID: 4,
+          userID: curUserID,
         })
         .then((res) => {
           getAgreeCount();
@@ -143,13 +141,17 @@ const PetitionDetail = () => {
 
   const onSubmitComment = async (event) => {
     event.preventDefault();
+    if(!user) {
+      alert("로그인이 필요합니다.");
+      return navigate('/login');
+    }
     await axios({
       method: "POST",
       // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
       url: `http://localhost:8080/api/comments/upload`,
       data: {
         postID: params.id,
-        userID: 2,
+        userID: curUserID,
         content: commentInput,
       },
     });

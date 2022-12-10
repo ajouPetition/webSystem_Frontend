@@ -53,6 +53,10 @@
   justify-content: space-evenly;
 }
 
+.btn1:hover{
+  cursor: pointer;
+}
+
 .btn1 {
   width: 20.5rem;
   height: 3rem;
