@@ -1,12 +1,11 @@
-import style from "../style/NavigationBar.module.css";
-import cookies from "react-cookies";
-import { useNavigate } from "react-router-dom";
+import style from '../style/NavigationBar.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const NavigationBar = () => {
+const NavigationBar = ({ user }) => {
   const navigate = useNavigate();
   const goToMypage = (event) => {
     // cookies.remove("userid", { path: "/" });
-    navigate("/mypage");
+    navigate('/mypage');
   };
 
   return (
@@ -37,7 +36,7 @@ const NavigationBar = () => {
           <div className={style.user}>
             <ul>
               <li className={style.link}>
-                {cookies.load("userid") === undefined ? (
+                {user === '' ? (
                   <a href={`/login`}>로그인</a>
                 ) : (
                   <button className={style.button} onClick={goToMypage}>

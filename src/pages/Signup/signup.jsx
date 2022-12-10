@@ -1,7 +1,7 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import style from "../../style/Signup.module.css";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import style from '../../style/Signup.module.css';
 
 const Signup = (props) => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Signup = (props) => {
   const onSignupHandler = (event) => {
     axios
 
-        .post("http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register", {
+      .post('http://localhost:8080/api/users/register', {
         // .post("localhost:8080/api/users/register", {
         userID: email,
         username: name,
@@ -40,7 +40,7 @@ const Signup = (props) => {
       })
       .then((response) => {
         console.log(response);
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);

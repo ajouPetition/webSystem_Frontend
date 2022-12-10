@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import style from "../../style/Mypage.module.css";
-import cookies from "react-cookies";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import PetitionCard from "../../components/PetitionCard";
-import { toHaveDisplayValue } from "@testing-library/jest-dom/dist/matchers";
-const Mypage = (props) => {
+import React, { useState } from 'react';
+import style from '../../style/Mypage.module.css';
+import cookies from 'react-cookies';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import PetitionCard from '../../components/PetitionCard';
+import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers';
+const Mypage = ({ user }) => {
   const navigate = useNavigate();
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
@@ -14,7 +14,7 @@ const Mypage = (props) => {
     await axios
       .get(`http://localhost:8080/api/users/posts`, {
         params: {
-          username: `${cookies.load("userid")}`,
+          username: user,
           startAt: 0,
           limit: 3,
         },
@@ -48,7 +48,7 @@ const Mypage = (props) => {
     await axios
       .get(`http://localhost:8080/api/users/agree`, {
         params: {
-          username: `${cookies.load("userid")}`,
+          username: user,
           startAt: 0,
           limit: 3,
         },
@@ -68,19 +68,17 @@ const Mypage = (props) => {
   };
 
   const logoutHandler = (event) => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      cookies.remove("userid", { path: "/" });
-      alert("로그아웃되었습니다.");
-      navigate("/");
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      cookies.remove('token', { path: '/' });
+      alert('로그아웃되었습니다.');
+      navigate('/');
     }
   };
 
   const deleteAccountHandler = (event) => {
-    const pwd = prompt("비밀번호를 입력하세요.");
+    const pwd = prompt('비밀번호를 입력하세요.');
     axios
-      .delete(
-        `http://localhost:8080/api/users/delete/${cookies.load("userid")}`
-      )
+      .delete(`http://localhost:8080/api/users/delete/${user}`)
       .then((data) => {
         console.log(data);
       })
@@ -89,7 +87,7 @@ const Mypage = (props) => {
   return (
     <div className={style.section}>
       <div className={style.optionbar}>
-        <div className={`${style.username}`}>{cookies.load("userid")}</div>
+        <div className={`${style.username}`}>{user}</div>
         <div
           className={`${style.myWrtie} ${style.option}`}
           onClick={writeHandler}

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +5,7 @@ import style from '../../style/PetitionWrite.module.css';
 import PetitionTypeBtn from '../../components/PetitionTypeBtn';
 import Spinner from '../../components/Spinner';
 
-const PetitionWrite = () => {
+const PetitionWrite = ({ user }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [type, setType] = useState('기타');
@@ -32,25 +31,25 @@ const PetitionWrite = () => {
     event.preventDefault();
     setIsLoading(true);
     axios
-      .post("http://localhost:8080/api/board/upload", {
+      .post('http://localhost:8080/api/board/upload', {
         title,
         type,
         content,
-        userID: 4,
+        username: user,
       })
       .then((response) => {
         console.log(response);
 
         setIsLoading(false);
-        navigate("/petition");
+        navigate('/petition');
       })
       .catch((error) => {
         console.log(error);
-        navigate("/petition");
+        navigate('/petition');
       });
   };
   const onCancel = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (

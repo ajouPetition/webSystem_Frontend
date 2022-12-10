@@ -1,10 +1,10 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import cookies from "react-cookies";
-import style from "../../style/Login.module.css";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import cookies from 'react-cookies';
+import style from '../../style/Login.module.css';
 
-const Login = (props) => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -26,8 +26,7 @@ const Login = (props) => {
     console.log(email);
     console.log(password);
     axios
-      .post("http://localhost:8080/api/users/login", {
-
+      .post('http://localhost:8080/api/users/login', {
         username: email,
         password: password,
       })
@@ -35,16 +34,10 @@ const Login = (props) => {
         console.log(data);
 
         // cookie 저장
-        const expires = new Date();
-        expires.setHours(expires.getHours() + 1);
-        console.log(expires);
-        cookies.save("userid", email, {
-          path: "/",
-          expires,
-        });
-        console.log(cookies.load("userid"));
+
+        cookies.save('token', data.data.token);
         // 로그인 성공 후 홈 화면으로
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => console.log(err));
   };
@@ -74,8 +67,8 @@ const Login = (props) => {
           </div>
         </div>
         <div>
-          회원가입은{" "}
-          <a className={style.href} href={"/login/signup"}>
+          회원가입은{' '}
+          <a className={style.href} href={'/login/signup'}>
             여기
           </a>
           에서 할 수 있습니다.
