@@ -4,7 +4,6 @@ import cookies from "react-cookies";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PetitionCard from "../../components/PetitionCard";
-import { toHaveDisplayValue } from "@testing-library/jest-dom/dist/matchers";
 const Mypage = (props) => {
   const navigate = useNavigate();
   const [myWrite, setMyWrite] = useState([]);
