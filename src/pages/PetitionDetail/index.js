@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import style from "../../style/PetitionDetail.module.css";
-import axios from "axios";
-import Pagination from "../../components/Pagination";
-import QueryString from "qs";
-import Spinner from "../../components/Spinner";
-import cookies from "react-cookies";
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import style from '../../style/PetitionDetail.module.css';
+import axios from 'axios';
+import Pagination from '../../components/Pagination';
+import QueryString from 'qs';
+import Spinner from '../../components/Spinner';
 
-const PetitionDetail = () => {
+const PetitionDetail = ({ user }) => {
   const params = useParams();
   const [post, setPost] = useState({});
-  const [startDate, setStartDate] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const [cntAgree, setCntAgree] = useState(0);
   const [comments, setComments] = useState([]);
-  const [commentInput, setCommentInput] = useState("");
+  const [commentInput, setCommentInput] = useState('');
   const [countComments, setCountComments] = useState(0);
   const [isLoadingPetition, setIsLoadingPetition] = useState(true);
   const [isLoadingComments, setIsLoadingComments] = useState(true);
@@ -23,7 +22,7 @@ const PetitionDetail = () => {
   const location = useLocation();
   const { commentPage } = QueryString.parse(location.search, {
     ignoreQueryPrefix: true,
-  }); 
+  });
   const [curUserID, setCurUserID] = useState();
 
   const currentCommentPage = commentPage ? parseInt(commentPage) - 1 : 0;
@@ -32,7 +31,7 @@ const PetitionDetail = () => {
 
   const getAgreeCount = async () => {
     const data = await axios({
-      method: "GET",
+      method: 'GET',
       url: `http://localhost:8080/api/agree/post/${params.id}`,
     });
     setCntAgree(data.data);
@@ -42,19 +41,19 @@ const PetitionDetail = () => {
     setIsLoadingPetition(true);
     setIsLoadingComments(true);
 
-    const getUserID = async() =>{
-      const name = cookies.load("userid")
+    const getUserID = async () => {
+      const name = user;
       const data = await axios({
-        method: "GET",
-        url: `http://localhost:8080/api/users/${name}`
-      })
-      setCurUserID(data.data[0].userID)
-    }
+        method: 'GET',
+        url: `http://localhost:8080/api/users/${name}`,
+      });
+      setCurUserID(data.data[0].userID);
+    };
     getUserID();
 
     const getPetition = async () => {
       const Petition = await axios({
-        method: "GET",
+        method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
         url: `http://localhost:8080/api/board/view/${params.id}`,
       });
@@ -67,7 +66,7 @@ const PetitionDetail = () => {
         )
       );
       const data = await axios({
-        method: "GET",
+        method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
         url: `http://localhost:8080/api/agree/post/${params.id}`,
       });
@@ -80,7 +79,7 @@ const PetitionDetail = () => {
 
     const getComments = async () => {
       const data = await axios({
-        method: "GET",
+        method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${params.id}?startAt=${
         //   currentCommentPage * limitComment
         // }&limit=${limitComment}`,
@@ -89,14 +88,14 @@ const PetitionDetail = () => {
         }&limit=${limitComment}`,
       });
       const count = await axios({
-        method: "GET",
+        method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
         url: `http://localhost:8080/api/comments/countComments/${params.id}`,
       });
       setComments(data.data);
-      setCountComments(count.data[0]["COUNT(*)"]);
+      setCountComments(count.data[0]['COUNT(*)']);
       setCountCommentPageLimit(
-        Math.ceil(count.data[0]["COUNT(*)"] / limitComment)
+        Math.ceil(count.data[0]['COUNT(*)'] / limitComment)
       );
       setIsLoadingComments(false);
     };
@@ -104,12 +103,12 @@ const PetitionDetail = () => {
   }, [currentCommentPage, params, cntAgree]);
 
   const onClickAgreeBtn = (event) => {
-    if(window.confirm("동의 하시겠습니까?")){
+    if (window.confirm('동의 하시겠습니까?')) {
       axios
         // .post(
         // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
         // {
-        .post("http://localhost:8080/api/agree/agree", {
+        .post('http://localhost:8080/api/agree/agree', {
           postID: params.id,
           userID: 4,
         })
@@ -117,20 +116,21 @@ const PetitionDetail = () => {
           getAgreeCount();
         })
         .catch((err) => {
-          if (err.response.status === 400) alert("이미 동의한 청원입니다.");
+          if (err.response.status === 400) alert('이미 동의한 청원입니다.');
         });
     }
   };
 
   const onClickDeleteBtn = (event) => {
-    if(window.confirm("정말로 삭제 하시겠습니까?")){
-      axios.delete(`http://localhost:8080/api/board/delete/${params.id}`)
-      .then((res)=>{
-        navigate('/petition')
-      })
-      .catch((err)=>{
-        alert('잘못된 요청입니다.')
-      })
+    if (window.confirm('정말로 삭제 하시겠습니까?')) {
+      axios
+        .delete(`http://localhost:8080/api/board/delete/${params.id}`)
+        .then((res) => {
+          navigate('/petition');
+        })
+        .catch((err) => {
+          alert('잘못된 요청입니다.');
+        });
     }
   };
 
@@ -144,7 +144,7 @@ const PetitionDetail = () => {
   const onSubmitComment = async (event) => {
     event.preventDefault();
     await axios({
-      method: "POST",
+      method: 'POST',
       // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
       url: `http://localhost:8080/api/comments/upload`,
       data: {
@@ -160,7 +160,7 @@ const PetitionDetail = () => {
           : countCommentPageLimit
       }`
     );
-    setCommentInput("");
+    setCommentInput('');
   };
 
   return (
@@ -208,7 +208,7 @@ const PetitionDetail = () => {
             <div className={style.btnContainer}>
               <button
                 onClick={() => {
-                  navigate("/petition");
+                  navigate('/petition');
                 }}
               >
                 목록보기
@@ -216,21 +216,21 @@ const PetitionDetail = () => {
               {curUserID === post.userID ? (
                 <button
                   onClick={onClickDeleteBtn}
-                  style=
-                  {{
-                    color: "white",
-                    backgroundColor: "#132d5a",
-                    border: "none",
-                  }}>
-                    삭제하기
+                  style={{
+                    color: 'white',
+                    backgroundColor: '#132d5a',
+                    border: 'none',
+                  }}
+                >
+                  삭제하기
                 </button>
               ) : (
                 <button
                   onClick={onClickAgreeBtn}
                   style={{
-                    color: "white",
-                    backgroundColor: "#132d5a",
-                    border: "none",
+                    color: 'white',
+                    backgroundColor: '#132d5a',
+                    border: 'none',
                   }}
                 >
                   동의하기

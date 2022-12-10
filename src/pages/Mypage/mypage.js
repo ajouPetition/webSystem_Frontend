@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import style from '../../style/Mypage.module.css';
-import cookies from 'react-cookies';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import PetitionCard from '../../components/PetitionCard';
-const Mypage = ({ user }) => {
-  const navigate = useNavigate();
+const Mypage = ({ user, removeCookie }) => {
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
   const [totalpage, setTotalPage] = useState();
@@ -16,7 +13,7 @@ const Mypage = ({ user }) => {
     await axios
       .get(`http://localhost:8080/api/users/posts`, {
         params: {
-          username: `${cookies.load('userid')}`,
+          username: user,
           startAt: 3 * (page - 1),
           limit: 3,
         },
@@ -98,9 +95,9 @@ const Mypage = ({ user }) => {
 
   const logoutHandler = (event) => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
-      cookies.remove('token', { path: '/' });
+      removeCookie('token');
       alert('로그아웃되었습니다.');
-      navigate('/');
+      window.location.replace('/');
     }
   };
 

@@ -9,22 +9,23 @@ import PetitionList from './PetitionList';
 import PetitionCompletedList from './PetitionCompletedList';
 import PetitionWrite from './PetitionWrite';
 import Signup from './Signup/signup';
-import cookies from 'react-cookies';
+import { useCookies } from 'react-cookie';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsLoading(true);
-
     const getUser = () => {
-      cookies.load('token')
+      cookies.token
         ? axios
             .get('http://localhost:8080/api/users/auth/payload', {
-              headers: { authorization: cookies.load('token') },
+              headers: { authorization: cookies.token },
             })
             .then((result) => {
               setUser(result.data.data.username);
@@ -37,7 +38,7 @@ function App() {
         : setIsLoading(false);
     };
     getUser();
-  }, []);
+  }, [cookies.token]);
 
   return (
     <BrowserRouter>
@@ -52,7 +53,11 @@ function App() {
               path="/login"
               exact
               element={
-                user ? <Navigate to={'/mypage'} replace={true} /> : <Login />
+                user ? (
+                  <Navigate to={'/mypage'} replace={true} />
+                ) : (
+                  <Login setCookie={setCookie} />
+                )
               }
             ></Route>
             <Route
@@ -84,7 +89,7 @@ function App() {
               exact
               element={
                 user ? (
-                  <Mypage user={user} />
+                  <Mypage user={user} removeCookie={removeCookie} />
                 ) : (
                   <Navigate to={'/login'} replace={true} />
                 )
@@ -93,7 +98,7 @@ function App() {
             <Route
               path="/petition/detail/:id"
               exact
-              element={<PetitionDetail />}
+              element={<PetitionDetail user={user} />}
             ></Route>
           </Routes>
         </>

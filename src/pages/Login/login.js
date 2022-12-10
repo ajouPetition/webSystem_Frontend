@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import cookies from 'react-cookies';
 import style from '../../style/Login.module.css';
 
-const Login = () => {
+const Login = ({ setCookie }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -30,7 +29,7 @@ const Login = () => {
 
         // cookie 저장
 
-        cookies.save('token', data.data.token);
+        setCookie('token', data.data.token);
         // 로그인 성공 후 홈 화면으로
         navigate('/');
       })

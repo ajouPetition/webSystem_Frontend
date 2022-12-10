@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import cookies from "react-cookies";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import style from "../../style/Home.module.css";
-import PetitionCard from "../../components/PetitionCard";
+import style from '../../style/Home.module.css';
+import PetitionCard from '../../components/PetitionCard';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  console.log(cookies.load("userid"));
+
   useEffect(() => {
     const getPetitions = async () => {
       const Petitions = await axios({
-        method: "GET",
+        method: 'GET',
         url: `http://localhost:8080/api/board/listTop`,
         // url: `http://127.0.0.1:3080/api/board/listTop`
       });
@@ -32,10 +31,8 @@ const Home = () => {
             {posts?.map((post) => {
               const today = new Date();
               const date = new Date(post.date);
-              const dueDate = new Date(                  
-                new Date(post.date).setDate(
-                  new Date(post.date).getDate() + 60
-                )
+              const dueDate = new Date(
+                new Date(post.date).setDate(new Date(post.date).getDate() + 60)
               );
               const dDay = Math.ceil(
                 (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
