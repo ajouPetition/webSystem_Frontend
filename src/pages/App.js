@@ -30,10 +30,7 @@ function App() {
               setUser(result.data.data.username);
               setIsLoading(false);
             })
-            .catch((error) => {
-              console.error(error)
-              setIsLoading(false);
-            })
+            .catch((error) => console.error(error))
         : setIsLoading(false);
     };
     getUser();
@@ -93,7 +90,7 @@ function App() {
             <Route
               path="/petition/detail/:id"
               exact
-              element={<PetitionDetail user={user}/>}
+              element={<PetitionDetail />}
             ></Route>
           </Routes>
         </>
