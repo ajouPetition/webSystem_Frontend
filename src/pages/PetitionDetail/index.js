@@ -104,30 +104,34 @@ const PetitionDetail = () => {
   }, [currentCommentPage, params, cntAgree]);
 
   const onClickAgreeBtn = (event) => {
-    axios
-      // .post(
-      // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
-      // {
-      .post("http://localhost:8080/api/agree/agree", {
-        postID: params.id,
-        userID: 4,
-      })
-      .then((res) => {
-        getAgreeCount();
-      })
-      .catch((err) => {
-        if (err.response.status === 400) alert("이미 동의한 청원입니다.");
-      });
+    if(window.confirm("동의 하시겠습니까?")){
+      axios
+        // .post(
+        // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
+        // {
+        .post("http://localhost:8080/api/agree/agree", {
+          postID: params.id,
+          userID: 4,
+        })
+        .then((res) => {
+          getAgreeCount();
+        })
+        .catch((err) => {
+          if (err.response.status === 400) alert("이미 동의한 청원입니다.");
+        });
+    }
   };
 
   const onClickDeleteBtn = (event) => {
-    axios.delete(`http://localhost:8080/api/board/delete/${params.id}`)
-    .then((res)=>{
-      navigate('/petition')
-    })
-    .catch((err)=>{
-      alert('잘못된 요청입니다.')
-    })
+    if(window.confirm("정말로 삭제 하시겠습니까?")){
+      axios.delete(`http://localhost:8080/api/board/delete/${params.id}`)
+      .then((res)=>{
+        navigate('/petition')
+      })
+      .catch((err)=>{
+        alert('잘못된 요청입니다.')
+      })
+    }
   };
 
   const onChangeComment = (event) => {
@@ -259,7 +263,7 @@ const PetitionDetail = () => {
             <div className={style.commentListBox}>
               {comments?.map((comment, index) => (
                 <div key={index} className={style.commentList}>
-                  <span>김준서</span>
+                  <span>***</span>
                   <li>{comment.content}</li>
                 </div>
               ))}
