@@ -30,16 +30,17 @@ ul {
 .button {
   background-color: #132d5a;
   border-style: none;
-  color: white;
+  color: rgb(131, 151, 172);
   font-size: 20px;
   font-weight: bolder;
 }
 
 .button:hover {
   cursor: pointer;
+  color: aliceblue;
 }
 
-.logo{
+.logo {
   color: aliceblue;
 }
 
@@ -48,6 +49,6 @@ a {
   text-decoration: none;
 }
 
-a:hover{
+a:hover {
   color: aliceblue;
 }
