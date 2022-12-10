@@ -15,7 +15,9 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
         <div className={style.ratioDiv}>
           <div className={style.caption}>
             <div className={style.count}>
-              <img alt="like" src={likeIcon} />
+              <div className={style.imgDiv}>
+                <img alt="like" src={likeIcon} />
+              </div>
               <div className={style.countText}>
                 {cnt !== null ? `${cnt}명` : "0명"}
               </div>
@@ -26,10 +28,10 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
             <div className={style.progressBar}>
               <div
                 style={{
-                  width: `${cnt * 0.9}%`,
+                  width: (cnt===null ? `0%`: `${cnt}%`),
                   height: "20px",
                   backgroundColor: "#132d5a",
-                  borderRadius: "3px",
+                  borderRadius: "4px",
                 }}
               ></div>
             </div>
@@ -41,7 +43,7 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
             <div className={style.dueDateFooter}>{`${date}~${dueDate}`}</div>
           </div>
           <div className={style.dDay}>
-            <p>{dDay>0?`D- ${dDay}`:`D- 0`}</p>
+            <p>{dDay > 0 ? `D- ${dDay}` : `D- 0`}</p>
           </div>
         </div>
       </div>
