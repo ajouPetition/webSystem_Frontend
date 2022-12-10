@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../style/Mypage.module.css";
 import cookies from "react-cookies";
 import axios from "axios";
@@ -8,30 +8,40 @@ const Mypage = (props) => {
   const navigate = useNavigate();
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
+  const [totalpage, setTotalPage] = useState();
+  const [page, setPage] = useState(1);
 
   const getWrite = async () => {
+    console.log("page num : ", page);
+    await axios
+      .get(`http://localhost:8080/api/users/posts`, {
+        params: {
+          username: `${cookies.load("userid")}`,
+          startAt: 3 * (page - 1),
+          limit: 3 * page,
+        },
+      })
+      .then((data) => {
+        setMyWrite(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     await axios
       .get(`http://localhost:8080/api/users/posts`, {
         params: {
           username: `${cookies.load("userid")}`,
           startAt: 0,
-          limit: 3,
+          limit: 100,
         },
       })
       .then((data) => {
-        // data.data.map((data) => {
-        //   const today = new Date();
-        //   const date = new Date(data.date).getDay();
-        //   const dueDate = new Date(
-        //     new Date(data.date).setDate(new Date(data.date).getDate() + 30)
-        //   );
-        //   const dDay = Math.ceil(
-        //     (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-        //   );
-        //   data.dueDate = dueDate;
-        //   data.dDay = dDay;
-        // });
-        setMyWrite(data.data);
+        console.log("data 갯수 : ", data.data.length);
+        if (data.data.length % 3 === 0) {
+          setTotalPage(parseInt(data.data.length / 3));
+        } else {
+          setTotalPage(parseInt(data.data.length / 3) + 1);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -40,20 +50,40 @@ const Mypage = (props) => {
   const writeHandler = (event) => {
     setMyAgree([]);
     getWrite();
-    console.log(myWrite);
   };
 
   const getAgree = async () => {
+    console.log("page num : ", page);
+    await axios
+      .get(`http://localhost:8080/api/users/agree`, {
+        params: {
+          username: `${cookies.load("userid")}`,
+          startAt: 3 * (page - 1),
+          limit: 3 * page,
+        },
+      })
+      .then((data) => {
+        setMyAgree(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     await axios
       .get(`http://localhost:8080/api/users/agree`, {
         params: {
           username: `${cookies.load("userid")}`,
           startAt: 0,
-          limit: 3,
+          limit: 100,
         },
       })
       .then((data) => {
-        setMyAgree(data.data);
+        console.log("data 갯수 : ", data.data.length);
+
+        if (data.data.length % 3 === 0) {
+          setTotalPage(parseInt(data.data.length / 3));
+        } else {
+          setTotalPage(parseInt(data.data.length / 3) + 1);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +93,6 @@ const Mypage = (props) => {
   const agreeHandler = (event) => {
     setMyWrite([]);
     getAgree();
-    console.log(myAgree);
   };
 
   const logoutHandler = (event) => {
@@ -75,7 +104,7 @@ const Mypage = (props) => {
   };
 
   const deleteAccountHandler = (event) => {
-    const pwd = prompt("비밀번호를 입력하세요.");
+    // const pwd = prompt("비밀번호를 입력하세요.");
     axios
       .delete(
         `http://localhost:8080/api/users/delete/${cookies.load("userid")}`
@@ -85,6 +114,23 @@ const Mypage = (props) => {
       })
       .catch((err) => console.log(err));
   };
+  const onPageHandler = (event) => {
+    console.log("clicked page num ", event.target.innerText);
+    setPage(event.target.innerText);
+  };
+
+  useEffect(() => {
+    // if (myAgree === []) {
+    //   getWrite();
+    // } else {
+    //   getAgree();
+    // }
+    if (myWrite === []) {
+      getAgree();
+    } else {
+      getWrite();
+    }
+  }, [page]);
   return (
     <div className={style.section}>
       <div className={style.optionbar}>
@@ -114,51 +160,66 @@ const Mypage = (props) => {
           계정 탈퇴
         </div>
       </div>
-      <div className={style.info}>
-        {myWrite.map((data) => {
-          const today = new Date();
-          const date = new Date(data.date);
-          const dueDate = new Date(
-            new Date(data.date).setDate(new Date(data.date).getDate() + 30)
-          );
-          const dDay = Math.ceil(
-            (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          return (
-            <PetitionCard
-              key={data.postID}
-              type={data.type}
-              title={data.title}
-              date={date.toLocaleDateString()}
-              dueDate={dueDate.toLocaleDateString()}
-              dDay={dDay}
-              postID={data.postID}
-              cnt={data.cnt}
-            />
-          );
-        })}
-        {myAgree.map((data) => {
-          const today = new Date();
-          const date = new Date(data.date);
-          const dueDate = new Date(
-            new Date(data.date).setDate(new Date(data.date).getDate() + 30)
-          );
-          const dDay = Math.ceil(
-            (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          return (
-            <PetitionCard
-              key={data.postID}
-              type={data.type}
-              title={data.title}
-              date={date.toLocaleDateString()}
-              dueDate={dueDate.toLocaleDateString()}
-              dDay={dDay}
-              postID={data.postID}
-              cnt={data.cnt}
-            />
-          );
-        })}
+      <div className={style.data}>
+        <div className={style.info}>
+          {myWrite.map((data) => {
+            const today = new Date();
+            const date = new Date(data.date);
+            const dueDate = new Date(
+              new Date(data.date).setDate(new Date(data.date).getDate() + 30)
+            );
+            const dDay = Math.ceil(
+              (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+            );
+            return (
+              <PetitionCard
+                key={data.postID}
+                type={data.type}
+                title={data.title}
+                date={date.toLocaleDateString()}
+                dueDate={dueDate.toLocaleDateString()}
+                dDay={dDay}
+                postID={data.postID}
+                cnt={data.cnt}
+              />
+            );
+          })}
+          {myAgree.map((data) => {
+            const today = new Date();
+            const date = new Date(data.date);
+            const dueDate = new Date(
+              new Date(data.date).setDate(new Date(data.date).getDate() + 30)
+            );
+            const dDay = Math.ceil(
+              (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+            );
+            return (
+              <PetitionCard
+                key={data.postID}
+                type={data.type}
+                title={data.title}
+                date={date.toLocaleDateString()}
+                dueDate={dueDate.toLocaleDateString()}
+                dDay={dDay}
+                postID={data.postID}
+                cnt={data.cnt}
+              />
+            );
+          })}
+        </div>
+        <div>
+          {Array(totalpage)
+            .fill()
+            .map((_, page_num) => (
+              <button
+                key={page_num + 1}
+                className={style.pageBtn}
+                onClick={onPageHandler}
+              >
+                {page_num + 1}
+              </button>
+            ))}
+        </div>
       </div>
     </div>
   );
