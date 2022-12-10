@@ -22,6 +22,7 @@ const Mypage = (props) => {
         },
       })
       .then((data) => {
+        console.log(data.data.length);
         setMyWrite(data.data);
       })
       .catch((err) => {
@@ -125,7 +126,7 @@ const Mypage = (props) => {
     // } else {
     //   getAgree();
     // }
-    if (myWrite === []) {
+    if (myWrite.length === 0) {
       getAgree();
     } else {
       getWrite();
