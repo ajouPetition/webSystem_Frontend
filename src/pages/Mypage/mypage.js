@@ -18,11 +18,11 @@ const Mypage = (props) => {
         params: {
           username: `${cookies.load("userid")}`,
           startAt: 3 * (page - 1),
-          limit: 3 * page,
+          limit: 3,
         },
       })
       .then((data) => {
-        console.log(data.data.length);
+        // console.log(data.data.le)
         setMyWrite(data.data);
       })
       .catch((err) => {
@@ -60,7 +60,7 @@ const Mypage = (props) => {
         params: {
           username: `${cookies.load("userid")}`,
           startAt: 3 * (page - 1),
-          limit: 3 * page,
+          limit: 3,
         },
       })
       .then((data) => {
