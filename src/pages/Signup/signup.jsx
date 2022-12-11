@@ -1,7 +1,7 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import style from "../../style/Signup.module.css";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import style from '../../style/Signup.module.css';
 
 const Signup = (props) => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Signup = (props) => {
     axios
 
       .post(
-        "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register",
+        'http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register',
         {
           // .post("localhost:8080/api/users/register", {
           username: username,
@@ -32,15 +32,15 @@ const Signup = (props) => {
         }
       )
       .then((response) => {
-        if (response.data.status === "success") {
-          alert("회원가입 성공");
-          navigate("/");
+        if (response.data.status === 'success') {
+          alert('회원가입 성공');
+          navigate('/');
         } else {
-          alert("User name이 중복되었습니다.");
+          alert('User name이 중복되었습니다.');
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 

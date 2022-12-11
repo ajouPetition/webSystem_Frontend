@@ -41,13 +41,11 @@ const PetitionWrite = ({ user }) => {
         }
       )
       .then((response) => {
-        console.log(response);
-
         setIsLoading(false);
         navigate('/petition');
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         navigate('/petition');
       });
   };

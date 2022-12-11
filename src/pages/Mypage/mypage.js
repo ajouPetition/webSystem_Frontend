@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import style from "../../style/Mypage.module.css";
-import axios from "axios";
-import PetitionCard from "../../components/PetitionCard";
+import React, { useState, useEffect } from 'react';
+import style from '../../style/Mypage.module.css';
+import axios from 'axios';
+import PetitionCard from '../../components/PetitionCard';
 const Mypage = ({ user, removeCookie }) => {
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
@@ -9,7 +9,6 @@ const Mypage = ({ user, removeCookie }) => {
   const [page, setPage] = useState(1);
 
   const getWrite = async () => {
-    console.log("page num : ", page);
     await axios
       .get(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/posts`,
@@ -25,7 +24,7 @@ const Mypage = ({ user, removeCookie }) => {
         setMyWrite(data.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
     await axios
       .get(
@@ -46,7 +45,7 @@ const Mypage = ({ user, removeCookie }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
   const writeHandler = (event) => {
@@ -70,7 +69,7 @@ const Mypage = ({ user, removeCookie }) => {
         setMyAgree(data.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
     await axios
       .get(
@@ -91,7 +90,7 @@ const Mypage = ({ user, removeCookie }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -101,15 +100,15 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   const logoutHandler = (event) => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      removeCookie("token");
-      alert("로그아웃되었습니다.");
-      window.location.replace("/");
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      removeCookie('token');
+      alert('로그아웃되었습니다.');
+      window.location.replace('/');
     }
   };
 
   const deleteAccountHandler = (event) => {
-    const pwd = prompt("비밀번호를 입력하세요.");
+    const pwd = prompt('비밀번호를 입력하세요.');
     axios
       .delete(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/delete`,
@@ -121,16 +120,15 @@ const Mypage = ({ user, removeCookie }) => {
         }
       )
       .then((data) => {
-        console.log("data : ", data.data.error);
-        if (typeof data.data.error == "undefined") {
-          alert("탈퇴되었습니다.");
-          removeCookie("token");
-          window.location.replace("/");
+        if (typeof data.data.error == 'undefined') {
+          alert('탈퇴되었습니다.');
+          removeCookie('token');
+          window.location.replace('/');
         } else {
           alert(data.data.error);
         }
       })
-      .catch((err) => console.log("err : ", err));
+      .catch((err) => console.error('err : ', err));
   };
   const onPageHandler = (event) => {
     setPage(event.target.innerText);
