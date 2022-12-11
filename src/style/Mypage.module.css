@@ -16,6 +16,15 @@
 .username {
   color: rgb(131, 151, 172);
 }
+.active {
+  padding: 0.5em;
+  text-align: center;
+  border: solid;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  color: aliceblue;
+}
 .option {
   padding: 0.5em;
   text-align: center;
@@ -48,7 +57,13 @@
   flex-wrap: wrap;
 }
 
-.pageBtn {
+.currentPage {
+  border: none;
+  font-size: 1.1em;
+  color: red;
+  background-color: white;
+}
+.extrPage {
   border: none;
   font-size: 1.1em;
   background-color: white;
@@ -57,17 +72,4 @@
 .pageBtn:hover {
   color: red;
   cursor: pointer;
-}
-
-.title {
-  font-size: 23px;
-  font-weight: 800;
-  color: rgb(131, 151, 172);
-  padding: 0.5em;
-  text-align: center;
-  border: solid;
-  border-bottom: none;
-  border-top: none;
-  border-right: none;
-  border-left: none;
 }

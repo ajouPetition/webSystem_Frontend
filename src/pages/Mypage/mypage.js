@@ -6,16 +6,31 @@ const Mypage = ({ user, removeCookie }) => {
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
   const [totalpage, setTotalPage] = useState();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState({
+    num: 1,
+    state: "write",
+  });
 
   const getWrite = async () => {
+<<<<<<< Updated upstream
+=======
+    console.log("page num : ", page);
+    if (page.state == "agree") {
+      setPage((current) => {
+        let newPage = { ...current };
+        newPage.num = 1;
+        newPage.state = "write";
+        return newPage;
+      });
+    }
+>>>>>>> Stashed changes
     await axios
       .get(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/posts`,
         {
           params: {
             username: user,
-            startAt: 3 * (page - 1),
+            startAt: 3 * (page.num - 1),
             limit: 3,
           },
         }
@@ -54,13 +69,21 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   const getAgree = async () => {
+    if (page.state == "write") {
+      setPage((current) => {
+        let newPage = { ...current };
+        newPage.num = 1;
+        newPage.state = "agree";
+        return newPage;
+      });
+    }
     await axios
       .get(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/agree`,
         {
           params: {
             username: user,
-            startAt: 3 * (page - 1),
+            startAt: 3 * (page.num - 1),
             limit: 3,
           },
         }
@@ -131,7 +154,12 @@ const Mypage = ({ user, removeCookie }) => {
       .catch((err) => console.error('err : ', err));
   };
   const onPageHandler = (event) => {
-    setPage(event.target.innerText);
+    // setPage(event.target.innerText);
+    setPage((current) => {
+      let newPage = { ...current };
+      newPage.num = event.target.innerText;
+      return newPage;
+    });
   };
 
   useEffect(() => {
@@ -140,15 +168,21 @@ const Mypage = ({ user, removeCookie }) => {
     } else {
       getAgree();
     }
-  }, [page]);
+  }, [page.num]);
   return (
     <div className={style.section}>
       <div className={style.optionbar}>
         <div className={`${style.username}`}>{user}</div>
-        <div className={`${style.option}`} onClick={writeHandler}>
+        <div
+          className={page.state == "write" ? style.active : style.option}
+          onClick={writeHandler}
+        >
           내가 쓴 글
         </div>
-        <div className={`${style.option}`} onClick={agreeHandler}>
+        <div
+          className={page.state == "agree" ? style.active : style.option}
+          onClick={agreeHandler}
+        >
           동의한 글
         </div>
         <div className={`${style.option}`} onClick={logoutHandler}>
@@ -159,11 +193,6 @@ const Mypage = ({ user, removeCookie }) => {
         </div>
       </div>
       <div className={style.data}>
-        {myWrite.length === 0 ? (
-          <div className={style.title}>동의한 글</div>
-        ) : (
-          <div className={style.title}>내가 쓴 글</div>
-        )}
         <div className={style.info}>
           {myWrite.map((data) => {
             const today = new Date();
@@ -216,7 +245,9 @@ const Mypage = ({ user, removeCookie }) => {
             .map((_, page_num) => (
               <button
                 key={page_num + 1}
-                className={style.pageBtn}
+                className={
+                  page.num == page_num + 1 ? style.currentPage : style.extrPage
+                }
                 onClick={onPageHandler}
               >
                 {page_num + 1}
