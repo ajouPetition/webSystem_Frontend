@@ -36,7 +36,7 @@ function App() {
             })
             .catch((error) => {
               console.error(error);
-              setIsLoading(false);
+              removeCookie('token');
             })
         : setIsLoading(false);
     };
