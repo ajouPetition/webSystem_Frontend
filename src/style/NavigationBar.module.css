@@ -27,14 +27,6 @@ ul {
   padding-left: 40px;
 }
 
-.button {
-  background-color: #132d5a;
-  border-style: none;
-  color: rgb(131, 151, 172);
-  font-size: 20px;
-  font-weight: bolder;
-}
-
 .button:hover {
   cursor: pointer;
   color: aliceblue;

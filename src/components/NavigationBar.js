@@ -1,13 +1,6 @@
 import style from '../style/NavigationBar.module.css';
-import { useNavigate } from 'react-router-dom';
 
 const NavigationBar = ({ user }) => {
-  const navigate = useNavigate();
-  const goToMypage = (event) => {
-    // cookies.remove("userid", { path: "/" });
-    navigate('/mypage');
-  };
-
   return (
     <>
       <div className={style.container}>
@@ -39,9 +32,7 @@ const NavigationBar = ({ user }) => {
                 {user === '' ? (
                   <a href={`/login`}>로그인</a>
                 ) : (
-                  <button className={style.button} onClick={goToMypage}>
-                    내 정보
-                  </button>
+                  <a href={'/mypage'}>내 정보</a>
                 )}
               </li>
             </ul>
