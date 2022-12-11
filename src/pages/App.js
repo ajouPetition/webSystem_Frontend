@@ -1,22 +1,22 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import NavigationBar from "../components/NavigationBar";
-import "../style/init.css";
-import Home from "./Home";
-import Login from "./Login/login";
-import Mypage from "./Mypage/mypage";
-import PetitionDetail from "./PetitionDetail";
-import PetitionList from "./PetitionList";
-import PetitionCompletedList from "./PetitionCompletedList";
-import PetitionWrite from "./PetitionWrite";
-import Signup from "./Signup/signup";
-import { useCookies } from "react-cookie";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Spinner from "../components/Spinner";
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import NavigationBar from '../components/NavigationBar';
+import '../style/init.css';
+import Home from './Home';
+import Login from './Login/login';
+import Mypage from './Mypage/mypage';
+import PetitionDetail from './PetitionDetail';
+import PetitionList from './PetitionList';
+import PetitionCompletedList from './PetitionCompletedList';
+import PetitionWrite from './PetitionWrite';
+import Signup from './Signup/signup';
+import { useCookies } from 'react-cookie';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Spinner from '../components/Spinner';
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const [user, setUser] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function App() {
     const getUser = () => {
       cookies.token
         ? axios
-            .get("http://localhost:8080/api/users/auth/payload", {
+            .get('http://localhost:8080/api/users/auth/payload', {
               headers: { authorization: cookies.token },
             })
             .then((result) => {
@@ -54,7 +54,7 @@ function App() {
               exact
               element={
                 user ? (
-                  <Navigate to={"/mypage"} replace={true} />
+                  <Navigate to={'/mypage'} replace={true} />
                 ) : (
                   <Login setCookie={setCookie} />
                 )
@@ -64,7 +64,7 @@ function App() {
               path="/login/signup"
               exact
               element={
-                user ? <Navigate to={"/mypage"} replace={true} /> : <Signup />
+                user ? <Navigate to={'/mypage'} replace={true} /> : <Signup />
               }
             ></Route>
             <Route path="/petition" exact element={<PetitionList />}></Route>
@@ -80,7 +80,7 @@ function App() {
                 user ? (
                   <PetitionWrite user={user} />
                 ) : (
-                  <Navigate to={"/login"} replace={true} />
+                  <Navigate to={'/login'} replace={true} />
                 )
               }
             ></Route>
@@ -91,7 +91,7 @@ function App() {
                 user ? (
                   <Mypage user={user} removeCookie={removeCookie} />
                 ) : (
-                  <Navigate to={"/login"} replace={true} />
+                  <Navigate to={'/login'} replace={true} />
                 )
               }
             ></Route>
