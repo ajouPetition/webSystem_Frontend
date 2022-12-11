@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import style from '../../style/Mypage.module.css';
-import axios from 'axios';
-import PetitionCard from '../../components/PetitionCard';
+import React, { useState, useEffect } from "react";
+import style from "../../style/Mypage.module.css";
+import axios from "axios";
+import PetitionCard from "../../components/PetitionCard";
 const Mypage = ({ user, removeCookie }) => {
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
@@ -12,9 +12,6 @@ const Mypage = ({ user, removeCookie }) => {
   });
 
   const getWrite = async () => {
-<<<<<<< Updated upstream
-=======
-    console.log("page num : ", page);
     if (page.state == "agree") {
       setPage((current) => {
         let newPage = { ...current };
@@ -23,7 +20,6 @@ const Mypage = ({ user, removeCookie }) => {
         return newPage;
       });
     }
->>>>>>> Stashed changes
     await axios
       .get(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/posts`,
@@ -123,15 +119,15 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   const logoutHandler = (event) => {
-    if (window.confirm('로그아웃 하시겠습니까?')) {
-      removeCookie('token');
-      alert('로그아웃되었습니다.');
-      window.location.replace('/');
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      removeCookie("token");
+      alert("로그아웃되었습니다.");
+      window.location.replace("/");
     }
   };
 
   const deleteAccountHandler = (event) => {
-    const pwd = prompt('비밀번호를 입력하세요.');
+    const pwd = prompt("비밀번호를 입력하세요.");
     axios
       .delete(
         `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/delete`,
@@ -143,15 +139,15 @@ const Mypage = ({ user, removeCookie }) => {
         }
       )
       .then((data) => {
-        if (typeof data.data.error == 'undefined') {
-          alert('탈퇴되었습니다.');
-          removeCookie('token');
-          window.location.replace('/');
+        if (typeof data.data.error == "undefined") {
+          alert("탈퇴되었습니다.");
+          removeCookie("token");
+          window.location.replace("/");
         } else {
           alert(data.data.error);
         }
       })
-      .catch((err) => console.error('err : ', err));
+      .catch((err) => console.error("err : ", err));
   };
   const onPageHandler = (event) => {
     // setPage(event.target.innerText);
