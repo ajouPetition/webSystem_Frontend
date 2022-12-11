@@ -137,42 +137,35 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   useEffect(() => {
-    if (myWrite.length === 0) {
-      getAgree();
-    } else {
+    if (myAgree.length === 0) {
       getWrite();
+    } else {
+      getAgree();
     }
   }, [page]);
   return (
     <div className={style.section}>
       <div className={style.optionbar}>
         <div className={`${style.username}`}>{user}</div>
-        <div
-          className={`${style.myWrtie} ${style.option}`}
-          onClick={writeHandler}
-        >
+        <div className={`${style.option}`} onClick={writeHandler}>
           내가 쓴 글
         </div>
-        <div
-          className={`${style.myAgree} ${style.option}`}
-          onClick={agreeHandler}
-        >
+        <div className={`${style.option}`} onClick={agreeHandler}>
           동의한 글
         </div>
-        <div
-          className={`${style.signout} ${style.option}`}
-          onClick={logoutHandler}
-        >
+        <div className={`${style.option}`} onClick={logoutHandler}>
           로그아웃
         </div>
-        <div
-          className={`${style.deleteAccount} ${style.option}`}
-          onClick={deleteAccountHandler}
-        >
+        <div className={`${style.option}`} onClick={deleteAccountHandler}>
           계정 탈퇴
         </div>
       </div>
       <div className={style.data}>
+        {myWrite.length === 0 ? (
+          <div className={style.title}>동의한 글</div>
+        ) : (
+          <div className={style.title}>내가 쓴 글</div>
+        )}
         <div className={style.info}>
           {myWrite.map((data) => {
             const today = new Date();

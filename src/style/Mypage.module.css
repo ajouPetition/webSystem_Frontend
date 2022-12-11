@@ -1,5 +1,4 @@
 .section {
-  /* background-color: black; */
   display: flex;
 }
 .optionbar {
@@ -14,7 +13,9 @@
   background-color: #132d5a;
   color: rgb(131, 151, 172);
 }
-
+.username {
+  color: rgb(131, 151, 172);
+}
 .option {
   padding: 0.5em;
   text-align: center;
@@ -29,13 +30,9 @@
   cursor: pointer;
 }
 
-.username{
-  color: aliceblue;
-}
-
 .data {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -43,9 +40,11 @@
 }
 .info {
   width: 100%;
-  margin-top: 4em;
+  margin-top: 5em;
+  margin-bottom: 8em;
   display: flex;
   justify-content: center;
+  /* align-items: center; */
   flex-wrap: wrap;
 }
 
@@ -58,4 +57,17 @@
 .pageBtn:hover {
   color: red;
   cursor: pointer;
+}
+
+.title {
+  font-size: 23px;
+  font-weight: 800;
+  color: rgb(131, 151, 172);
+  padding: 0.5em;
+  text-align: center;
+  border: solid;
+  border-bottom: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
 }
