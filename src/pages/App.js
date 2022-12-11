@@ -24,9 +24,12 @@ function App() {
     const getUser = () => {
       cookies.token
         ? axios
-            .get('http://localhost:8080/api/users/auth/payload', {
-              headers: { authorization: cookies.token },
-            })
+            .get(
+              'http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/auth/payload',
+              {
+                headers: { authorization: cookies.token },
+              }
+            )
             .then((result) => {
               setUser(result.data.data.username);
               setIsLoading(false);

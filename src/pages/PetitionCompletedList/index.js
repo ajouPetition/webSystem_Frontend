@@ -19,17 +19,17 @@ const PetitionCompletedList = () => {
   const limitPost = 4;
 
   const tabList = [
-    { tabName: "성립된 청원", id: 100 },
-    { tabName: "미성립된 청원", id: 0 },
+    { tabName: '성립된 청원', id: 100 },
+    { tabName: '미성립된 청원', id: 0 },
   ];
 
-  const { page, type, orderBy} = QueryString.parse(location.search, {
+  const { page, type, orderBy } = QueryString.parse(location.search, {
     ignoreQueryPrefix: true,
   });
 
   const currentPage = page ? parseInt(page) - 1 : 0;
   const currentType = type ? type : '전체';
-  const currentOrderBy = orderBy ? orderBy : 100 ;
+  const currentOrderBy = orderBy ? orderBy : 100;
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,14 +40,14 @@ const PetitionCompletedList = () => {
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/exlist/filter?type=${currentType}&pass=${currentOrderBy}&startAt=${
         //   currentPage * limitPost
         // }&limit=${limitPost}`,
-        url: `http://localhost:8080/api/board/exlist/filter?type=${currentType}&pass=${currentOrderBy}&startAt=${
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/exlist/filter?type=${currentType}&pass=${currentOrderBy}&startAt=${
           currentPage * limitPost
         }&limit=${limitPost}`,
       });
       const count = await axios({
         method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/exlistAll?type=${currentType}`,
-        url: `http://localhost:8080/api/board/exlistAll?type=${currentType}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/exlistAll?type=${currentType}`,
       });
       setCountPageLimit(Math.ceil(count.data[0]['COUNT(*)'] / limitPost));
       setPosts(Petitions.data);
@@ -92,7 +92,6 @@ const PetitionCompletedList = () => {
               <div className={style.petitionListDiv}>
                 <ul className={style.lists}>
                   {posts?.map((post, index) => {
-                    
                     const today = new Date();
                     const date = new Date(post.date);
                     const dueDate = new Date(

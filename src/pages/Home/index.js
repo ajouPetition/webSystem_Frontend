@@ -6,13 +6,13 @@ import PetitionCard from '../../components/PetitionCard';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [dateAscPosts, setDateAscPosts] = useState([])
+  const [dateAscPosts, setDateAscPosts] = useState([]);
 
   useEffect(() => {
     const getPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/listTop`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listTop`,
         // url: `http://127.0.0.1:3080/api/board/listTop`
       });
       setPosts(Petitions.data);
@@ -20,7 +20,7 @@ const Home = () => {
     const getDateAscPetitions = async () => {
       const Petitions = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/board/listTopDateAsc`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/listTopDateAsc`,
         // url: `http://127.0.0.1:3080/api/board/listTop`
       });
       setDateAscPosts(Petitions.data);

@@ -25,11 +25,14 @@ const Signup = (props) => {
   const onSignupHandler = (event) => {
     axios
 
-      .post('http://localhost:8080/api/users/register', {
-        // .post("localhost:8080/api/users/register", {
-        username: username,
-        password: password,
-      })
+      .post(
+        'http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/register',
+        {
+          // .post("localhost:8080/api/users/register", {
+          username: username,
+          password: password,
+        }
+      )
       .then((response) => {
         if (response.data.status === 'success') {
           alert('회원가입 성공');

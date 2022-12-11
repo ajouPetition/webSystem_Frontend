@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import style from "../../style/Mypage.module.css";
-import axios from "axios";
-import PetitionCard from "../../components/PetitionCard";
+import React, { useState, useEffect } from 'react';
+import style from '../../style/Mypage.module.css';
+import axios from 'axios';
+import PetitionCard from '../../components/PetitionCard';
 const Mypage = ({ user, removeCookie }) => {
   const [myWrite, setMyWrite] = useState([]);
   const [myAgree, setMyAgree] = useState([]);
@@ -9,15 +9,18 @@ const Mypage = ({ user, removeCookie }) => {
   const [page, setPage] = useState(1);
 
   const getWrite = async () => {
-    console.log("page num : ", page);
+    console.log('page num : ', page);
     await axios
-      .get(`http://localhost:8080/api/users/posts`, {
-        params: {
-          username: user,
-          startAt: 3 * (page - 1),
-          limit: 3,
-        },
-      })
+      .get(
+        `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/posts`,
+        {
+          params: {
+            username: user,
+            startAt: 3 * (page - 1),
+            limit: 3,
+          },
+        }
+      )
       .then((data) => {
         // console.log(data.data.le)
         setMyWrite(data.data);
@@ -26,15 +29,18 @@ const Mypage = ({ user, removeCookie }) => {
         console.log(err);
       });
     await axios
-      .get(`http://localhost:8080/api/users/posts`, {
-        params: {
-          username: user,
-          startAt: 0,
-          limit: 100,
-        },
-      })
+      .get(
+        `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/posts`,
+        {
+          params: {
+            username: user,
+            startAt: 0,
+            limit: 100,
+          },
+        }
+      )
       .then((data) => {
-        console.log("data 갯수 : ", data.data.length);
+        console.log('data 갯수 : ', data.data.length);
         if (data.data.length % 3 === 0) {
           setTotalPage(parseInt(data.data.length / 3));
         } else {
@@ -51,15 +57,18 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   const getAgree = async () => {
-    console.log("page num : ", page);
+    console.log('page num : ', page);
     await axios
-      .get(`http://localhost:8080/api/users/agree`, {
-        params: {
-          username: user,
-          startAt: 3 * (page - 1),
-          limit: 3,
-        },
-      })
+      .get(
+        `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/agree`,
+        {
+          params: {
+            username: user,
+            startAt: 3 * (page - 1),
+            limit: 3,
+          },
+        }
+      )
       .then((data) => {
         setMyAgree(data.data);
       })
@@ -67,15 +76,18 @@ const Mypage = ({ user, removeCookie }) => {
         console.log(err);
       });
     await axios
-      .get(`http://localhost:8080/api/users/agree`, {
-        params: {
-          username: user,
-          startAt: 0,
-          limit: 100,
-        },
-      })
+      .get(
+        `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/agree`,
+        {
+          params: {
+            username: user,
+            startAt: 0,
+            limit: 100,
+          },
+        }
+      )
       .then((data) => {
-        console.log("data 갯수 : ", data.data.length);
+        console.log('data 갯수 : ', data.data.length);
 
         if (data.data.length % 3 === 0) {
           setTotalPage(parseInt(data.data.length / 3));
@@ -94,36 +106,39 @@ const Mypage = ({ user, removeCookie }) => {
   };
 
   const logoutHandler = (event) => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      removeCookie("token");
-      alert("로그아웃되었습니다.");
-      window.location.replace("/");
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      removeCookie('token');
+      alert('로그아웃되었습니다.');
+      window.location.replace('/');
     }
   };
 
   const deleteAccountHandler = (event) => {
-    const pwd = prompt("비밀번호를 입력하세요.");
+    const pwd = prompt('비밀번호를 입력하세요.');
     axios
-      .delete(`http://localhost:8080/api/users/delete`, {
-        data: {
-          username: user,
-          password: pwd,
-        },
-      })
+      .delete(
+        `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/delete`,
+        {
+          data: {
+            username: user,
+            password: pwd,
+          },
+        }
+      )
       .then((data) => {
-        console.log("data : ", data.data.error);
-        if (typeof data.data.error == "undefined") {
-          alert("탈퇴되었습니다.");
-          removeCookie("token");
-          window.location.replace("/");
+        console.log('data : ', data.data.error);
+        if (typeof data.data.error == 'undefined') {
+          alert('탈퇴되었습니다.');
+          removeCookie('token');
+          window.location.replace('/');
         } else {
           alert(data.data.error);
         }
       })
-      .catch((err) => console.log("err : ", err));
+      .catch((err) => console.log('err : ', err));
   };
   const onPageHandler = (event) => {
-    console.log("clicked page num ", event.target.innerText);
+    console.log('clicked page num ', event.target.innerText);
     setPage(event.target.innerText);
   };
 

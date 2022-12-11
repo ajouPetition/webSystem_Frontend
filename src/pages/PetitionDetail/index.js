@@ -32,7 +32,7 @@ const PetitionDetail = ({ user }) => {
   const getAgreeCount = async () => {
     const data = await axios({
       method: 'GET',
-      url: `http://localhost:8080/api/agree/post/${params.id}`,
+      url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
     });
     setCntAgree(data.data);
   };
@@ -42,10 +42,10 @@ const PetitionDetail = ({ user }) => {
     setIsLoadingComments(true);
 
     const getUserID = async () => {
-      if(!user) return
+      if (!user) return;
       const data = await axios({
         method: 'GET',
-        url: `http://localhost:8080/api/users/${user}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/users/${user}`,
       });
       setCurUserID(data.data[0].userID);
     };
@@ -55,7 +55,7 @@ const PetitionDetail = ({ user }) => {
       const Petition = await axios({
         method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
-        url: `http://localhost:8080/api/board/view/${params.id}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/view/${params.id}`,
       });
       setPost(Petition.data[0]);
 
@@ -68,7 +68,7 @@ const PetitionDetail = ({ user }) => {
       const data = await axios({
         method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
-        url: `http://localhost:8080/api/agree/post/${params.id}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/post/${params.id}`,
       });
       setStartDate(start.toLocaleDateString());
       setDueDate(date.toLocaleDateString());
@@ -83,14 +83,14 @@ const PetitionDetail = ({ user }) => {
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${params.id}?startAt=${
         //   currentCommentPage * limitComment
         // }&limit=${limitComment}`,
-        url: `http://localhost:8080/api/comments/view/${params.id}?startAt=${
-          currentCommentPage * limitComment
-        }&limit=${limitComment}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/view/${
+          params.id
+        }?startAt=${currentCommentPage * limitComment}&limit=${limitComment}`,
       });
       const count = await axios({
         method: 'GET',
         // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
-        url: `http://localhost:8080/api/comments/countComments/${params.id}`,
+        url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/countComments/${params.id}`,
       });
       setComments(data.data);
       setCountComments(count.data[0]['COUNT(*)']);
@@ -103,19 +103,22 @@ const PetitionDetail = ({ user }) => {
   }, [currentCommentPage, params, cntAgree, user]);
 
   const onClickAgreeBtn = (event) => {
-    if(!user){
-      alert("로그인이 필요합니다.");
-      return navigate('/login')
+    if (!user) {
+      alert('로그인이 필요합니다.');
+      return navigate('/login');
     }
     if (window.confirm('동의 하시겠습니까?')) {
       axios
         // .post(
         // "http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree",
         // {
-        .post('http://localhost:8080/api/agree/agree', {
-          postID: params.id,
-          userID: curUserID,
-        })
+        .post(
+          'http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/agree/agree',
+          {
+            postID: params.id,
+            userID: curUserID,
+          }
+        )
         .then((res) => {
           getAgreeCount();
         })
@@ -128,7 +131,9 @@ const PetitionDetail = ({ user }) => {
   const onClickDeleteBtn = (event) => {
     if (window.confirm('정말로 삭제 하시겠습니까?')) {
       axios
-        .delete(`http://localhost:8080/api/board/delete/${params.id}`)
+        .delete(
+          `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/board/delete/${params.id}`
+        )
         .then((res) => {
           navigate('/petition');
         })
@@ -154,7 +159,7 @@ const PetitionDetail = ({ user }) => {
     await axios({
       method: 'POST',
       // url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
-      url: `http://localhost:8080/api/comments/upload`,
+      url: `http://ec2-13-112-188-15.ap-northeast-1.compute.amazonaws.com:8080/api/comments/upload`,
       data: {
         postID: params.id,
         userID: curUserID,
