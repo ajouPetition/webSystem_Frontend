@@ -22,13 +22,13 @@ const PetitionCard = ({ type, title, date, dueDate, dDay, postID, cnt }) => {
                 {cnt !== null ? `${cnt}명` : "0명"}
               </div>
             </div>
-            <div className={style.ratio}>{cnt !== null ? `${cnt}%` : "0%"}</div>
+            <div className={style.ratio}>{cnt !== null ? `${cnt*10}%` : "0%"}</div>
           </div>
           <div className={style.progressBarDiv}>
             <div className={style.progressBar}>
               <div
                 style={{
-                  width: (cnt===null ? `0%`: `${cnt}%`),
+                  width: (cnt===null ? `0%`: (cnt>10?'100%': `${cnt*10}%`)),
                   height: "20px",
                   backgroundColor: "#132d5a",
                   borderRadius: "4px",

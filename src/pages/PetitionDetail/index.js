@@ -208,7 +208,7 @@ const PetitionDetail = ({ user }) => {
                     <div className={style.listTitle}>동의 수</div>
                     <div
                       className={style.listContent}
-                    >{` ${cntAgree} 명 (${cntAgree}%)`}</div>
+                    >{` ${cntAgree} 명 (${cntAgree*10}%)`}</div>
                   </div>
                 </div>
               </div>
