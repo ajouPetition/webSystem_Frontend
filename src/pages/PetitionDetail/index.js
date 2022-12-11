@@ -214,7 +214,7 @@ const PetitionDetail = ({ user }) => {
               </div>
               <div className={style.contentBody}>
                 <div className={style.contentTitle}>청원 내용</div>
-                <div className={style.contentDetail}>{post.content}</div>
+                <pre className={style.contentDetail}>{post.content}</pre>
               </div>
             </div>
 
