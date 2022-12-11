@@ -30,6 +30,10 @@
   margin-bottom: 20px;
 }
 
+.content label {
+  font-size: larger;
+}
+
 .inputTitle {
   height: 40px;
   width: 100%;
